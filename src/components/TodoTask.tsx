@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import {TodoItemTaskInterface} from './../interfaces'
 
-const todoTask = (props: TodoItemTaskInterface) => {
+const TodoTask = (props: TodoItemTaskInterface) => {
     return(
         <div className="individual-item">
 
@@ -33,4 +33,4 @@ const todoTask = (props: TodoItemTaskInterface) => {
     )
 }
 
-export default todoTask
+export default TodoTask

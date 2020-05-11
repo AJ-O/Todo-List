@@ -1,13 +1,13 @@
 import * as React from 'react'
 
 import TodoTask from './TodoTask'
-import {TodoIndividualItemInterface, TodoItemsInterface} from './../interfaces'
+import {TodoItemsInterface} from '../interfaces'
 
 const TodoList = (props: TodoItemsInterface) => {
     return(
         <div className="todos">
             <ul>
-                {props.todos.map((todo: TodoIndividualItemInterface) => (
+                {props.todos.map((todo) => (
                     <li key={todo.id}>
                         <TodoTask
                             todo={todo}

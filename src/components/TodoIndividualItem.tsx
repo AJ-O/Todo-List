@@ -6,7 +6,7 @@ import {TodoCreateIndividualItemInterface, TodoIndividualItemInterface} from './
 const TodoIndividualItem = (props: TodoCreateIndividualItemInterface) => {
     
     const [formState, setFormState] = React.useState("")
-
+    const inputRef = React.useRef<HTMLInputElement>(null)
 
     function handleInputChange(event: React.ChangeEvent<HTMLInputElement>){
         setFormState(event.target.value)
@@ -19,7 +19,14 @@ const TodoIndividualItem = (props: TodoCreateIndividualItemInterface) => {
                 task: formState,
                 isCompleted: false
             }
+
             props.handleTodoCreate(newTodoItem)
+            
+            console.log(inputRef, inputRef.current)
+
+            if(inputRef && inputRef.current) {
+                inputRef.current.value = ""
+            }
         }
     }
     
@@ -27,13 +34,14 @@ const TodoIndividualItem = (props: TodoCreateIndividualItemInterface) => {
 
         <div>
             <input
+                ref={inputRef}
                 type="text"
                 placeholder="Enter task"
                 onChange={event => handleInputChange(event)}
                 onKeyPress={event => handleInputEnter(event)}
             />
             <input
-                type="text"
+                type="date"
                 placeholder="Enter date to do the task"
             />
         </div>

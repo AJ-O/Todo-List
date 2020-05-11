@@ -24,7 +24,7 @@ export interface TodoFormInterface {
 }
 
 export interface TodoItemTaskInterface {
-    todo: TodoIndividualItemInterface
+    todo: TodoIndividualItemInterface,
     handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string) => void;
     handleTodoDelete: (id: string) => void;
     handleTodoComplete: (id: string) => void;

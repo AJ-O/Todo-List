@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import Header from './Header'
-import TodoItems from './TodoItems'
+import TodoList from './TodoList'
 import TodoIndividualItem from './TodoIndividualItem'
 import {TodoFormInterface} from './../interfaces'
 
@@ -11,7 +11,7 @@ const TodoForm = (props: TodoFormInterface) => {
             <Header 
                 title={props.title}
             />
-            <TodoItems
+            <TodoList
                 todos={props.subtasks}
                 handleTodoComplete={props.handleTodoComplete}
                 handleTodoDelete={props.handleTodoDelete}
