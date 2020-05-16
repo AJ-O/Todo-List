@@ -2,27 +2,25 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema;
 
-export const testSchema = new Schema({
-    name: {
+let date = new Date()
+
+export const TodoList = new Schema({
+    id: {
         type: String,
-        required: "Enter a name",
     },
 
-    password: {
+    task: {
         type: String,
-        required: "Password required"
+        required: "Task cannot be empty!"
+    },
+    
+    isCompleted: {
+        type: Boolean,
+        default: false
+    },
+
+    setTime: {
+        type: String,
+        default: date.toDateString()
     }
 });
-//const url = "mongodb+srv://ash2:jain@cluster0-lj2nn.mongodb.net/test?retryWrites=true&w=majority";
-//
-// mongoose.connect(url, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-//     })
-//     .then(()=> {
-//         console.log("connected!")
-//         const db = mongoose.connection
-//     })
-//     .catch((err: Error): void => {
-//     console.log(err.message)
-// })

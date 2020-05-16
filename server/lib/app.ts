@@ -3,6 +3,7 @@ import * as bodyParser from "body-parser";
 import mongoose from 'mongoose'
 import {Routes} from './appRoutes'
 
+
 class App {
     public app: express.Application;
     public routes: Routes = new Routes()
@@ -13,14 +14,13 @@ class App {
         this.app = express();
         this.config()
         this.routes.routes(this.app);
-        this.url =  "mongodb+srv://ash2:jain@cluster0-lj2nn.mongodb.net/test?retryWrites=true&w=majority";
-        console.log(this.url)
+        this.url =  "mongodb+srv://ash2:jain@cluster0-lj2nn.mongodb.net/test?retryWrites=true&w=majority"; //set using .env
     }
     
     public config(): void {
         this.app.use(bodyParser.urlencoded({extended: false}));
         this.app.use(express.json({limit: "1mb"}));
-        mongoose.connect(this.url, {
+        mongoose.connect("mongodb+srv://ash2:jain@cluster0-lj2nn.mongodb.net/test?retryWrites=true&w=majority", {
             useNewUrlParser: true,
             useUnifiedTopology: true
             })

@@ -1,35 +1,46 @@
 import App from './app'
 import mongoose from 'mongoose'
-import {testSchema} from './models'
+import {TodoList} from './models'
 import {Request, Response} from 'express'
 
-const testModel = mongoose.model('test', testSchema)
-console.log(mongoose.models)
+const testModel = mongoose.model('test', TodoList)
 export class testController{
 
-    public db: mongoose.Connection;
-
     testController(){
-        this.db = App.db;
+        let db = App.db;    
+        console.log(db)
     }
 
-    public testthis(req: Request, res: Response) {
+    public createList(req: Request, res: Response) {
 
-        let newTest = new testModel(req.body)
-        newTest.save((err, data) => {
-            if(err){
-                console.log(err)
-                res.send(err)
-            }
-            console.log("called!")
-            res.json(data);
-        });
+        // let newTest = new testModel(req.body)
+
+        let db = App.db
+        db.collection("TodoList").insertMany(req.body).then(()=>{
+            res.json({response: "success"})
+        }).catch((err) => {
+            res.send(err)
+        })
+        // newTest.save((err, data) => {
+        //     if(err){
+        //         console.log(err)
+        //         res.send(err)
+        //     }
+        //     console.log("called!")
+        //     res.json(data);
+        // });
+    }
+
+    public testmethod(req: Request, res: Response) {
+        let db = App.db;    
     }
 
     public getRecords(req: Request, res: Response) {
-        testModel.find({}, (err, data) => {
+        console.log("called get")
+        testModel.findById("5ebeff034570f572ff0eb904", (err, data) => {
             if(err){
                 res.send(err)
+                console.log(err);
             } else{
                 console.log(data);
                 res.send(data);

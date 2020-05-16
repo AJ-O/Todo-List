@@ -20,7 +20,7 @@ const App = () => {
   function showForm(){
     let ele = document.getElementById("displayForm")
     if(ele) {
-      ele.style.display = "inline-block"
+      ele.style.display = "block"
     }
     console.log("called!")
   }
@@ -52,7 +52,6 @@ const App = () => {
 
   function handleTodoCreate(todo: TodoIndividualItemInterface) {
     console.log("create called!")
-    console.log(testTodos)
     const newTodoState: TodoIndividualItemInterface[] = [...testTodos]
     newTodoState.push(todo)
     setTodos(newTodoState)
@@ -70,10 +69,24 @@ const App = () => {
 
   }
 
-  function addListToDatabase() {
+  async function addListToDatabase() {
     //Add the list to the database, alert the user and show the lists
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-type" : "application/json"
+      },
+      body: JSON.stringify(testTodos)
+    }
+
+    const response = await fetch("/test", options);
+    const json = await response.json()
+
+    console.log(json);
+
     let ele = document.getElementById("displayForm")
     if(ele) {
+      setTodos([])
       ele.style.display = "none"
     }
   }
