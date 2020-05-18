@@ -2,7 +2,8 @@ import express from "express";
 import * as bodyParser from "body-parser";
 import mongoose from 'mongoose'
 import {Routes} from './appRoutes'
-
+import dotenv from 'dotenv'
+dotenv.config()
 
 class App {
     public app: express.Application;
@@ -14,13 +15,17 @@ class App {
         this.app = express();
         this.config()
         this.routes.routes(this.app);
-        this.url =  "mongodb+srv://ash2:jain@cluster0-lj2nn.mongodb.net/test?retryWrites=true&w=majority"; //set using .env
     }
     
     public config(): void {
         this.app.use(bodyParser.urlencoded({extended: false}));
         this.app.use(express.json({limit: "1mb"}));
-        mongoose.connect("mongodb+srv://ash2:jain@cluster0-lj2nn.mongodb.net/test?retryWrites=true&w=majority", {
+
+        let username = process.env.userName
+        let pass = process.env.pass
+        let url = `mongodb+srv://${username}:${pass}@cluster0-lj2nn.mongodb.net/test?retryWrites=true&w=majority`
+        
+        mongoose.connect(url, {
             useNewUrlParser: true,
             useUnifiedTopology: true
             })

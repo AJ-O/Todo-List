@@ -6,59 +6,46 @@ import {render} from 'react-dom'
 import shortid from 'shortid'
 
 import TodoForm from './components/TodoForm'
-import {TodoIndividualItemInterface} from './interfaces'
+import {TodoIndividualItemInterface, TodoItemsInterface} from './interfaces'
+import TodoList from './components/TodoList';
 
 const App = () => {
 
-  const [testTodos, setTodos] = React.useState<TodoIndividualItemInterface[]>([])
-  //better way to render!
+  const [testTodos, setTodos] = React.useState<TodoIndividualItemInterface[]>([]);
+  const [title, setTitle] = React.useState("");
+  const [list, setLists] = React.useState<TodoIndividualItemInterface[]>([]);
 
-  // if(t1){
-  //   render(test(), formEle)
-  // }
+  React.useEffect( () =>  {
+    const options = {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json"
+        }
+    }
+    fetch("/getLists", options).then(
+      response => response.json()
+    ).then((json) => {
+      console.log(json);
+    })
+}, [])
 
   function showForm(){
-    let ele = document.getElementById("displayForm")
+    let ele = document.getElementById("displayForm");
     if(ele) {
-      ele.style.display = "block"
+      ele.style.display = "block";
     }
-    console.log("called!")
+    console.log("called!");
   }
 
-  // function test() {
-  //   console.log("test")
-  //   return(
-  //     <div className="displayForm">
-  //         <TodoForm
-  //             title={"test"}
-  //             id={shortid.generate()}
-  //             subtasks={testTodos}
-  //             createTask={testTodos}
-  //             handleTodoCreate={handleTodoCreate}
-  //             handleTodoComplete={handleTodoComplete}
-  //             handleTodoDelete={handleTodoDelete}
-  //             handleTodoUpdate={handleTodoUpdate}
-  //         />
-  //         <button onClick={() => {
-  //             if(!t1) {
-  //               funct2(true)
-  //             } else {
-  //               funct2(false)
-  //             }
-  //           }}>Finalise List</button>
-  //     </div>
-  //   )
-  // }
-
   function handleTodoCreate(todo: TodoIndividualItemInterface) {
-    console.log("create called!")
-    const newTodoState: TodoIndividualItemInterface[] = [...testTodos]
-    newTodoState.push(todo)
-    setTodos(newTodoState)
+    console.log("create called!");
+    const newTodoState: TodoIndividualItemInterface[] = [...testTodos];
+    newTodoState.push(todo);
+    setTodos(newTodoState);
   }
 
   function handleTodoUpdate() {
-
+    
   }
 
   function handleTodoDelete() {
@@ -77,26 +64,33 @@ const App = () => {
         "Content-type" : "application/json"
       },
       body: JSON.stringify(testTodos)
-    }
+    };
 
-    const response = await fetch("/test", options);
-    const json = await response.json()
+    const response = await fetch("/createList", options);
+    const json = await response.json();
 
-    console.log(json);
-
-    let ele = document.getElementById("displayForm")
+    let ele = document.getElementById("displayForm");
     if(ele) {
-      setTodos([])
-      ele.style.display = "none"
+      setTodos([]);
+      ele.style.display = "none";
     }
   }
 
   return (
     <div>
-      <button onClick={showForm}>Create List</button>
+      {/* <TodoList
+        todos={list}
+        handleTodoComplete={handleTodoComplete}
+        handleTodoDelete={handleTodoDelete}
+        handleTodoUpdate={handleTodoUpdate}
+      /> */}
+
+      <button 
+        className="compose-btn"
+        onClick={showForm}>Create List</button>
       <div id="displayForm">
           <TodoForm
-              title={"test"}
+              title={title}
               id={shortid.generate()}
               subtasks={testTodos}
               createTask={testTodos}
@@ -105,7 +99,7 @@ const App = () => {
               handleTodoDelete={handleTodoDelete}
               handleTodoUpdate={handleTodoUpdate}
           />
-          <button onClick={addListToDatabase}>Finalise List</button>
+          <button onClick={addListToDatabase}>Finalize List</button>
       </div>
     </div>
     
@@ -113,6 +107,6 @@ const App = () => {
 }
 
 export default App;
-const rootElement = document.getElementById('root')
+const rootElement = document.getElementById('root');
 //const formEle = document.getElementById('formDisplay')
-render(<App />, rootElement)
+render(<App />, rootElement);

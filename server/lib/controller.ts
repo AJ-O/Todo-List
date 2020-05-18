@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import {TodoList} from './models'
 import {Request, Response} from 'express'
 
-const testModel = mongoose.model('test', TodoList)
+const testModel = mongoose.model('test2', TodoList)
 export class testController{
 
     testController(){
@@ -37,7 +37,7 @@ export class testController{
 
     public getRecords(req: Request, res: Response) {
         console.log("called get")
-        testModel.findById("5ebeff034570f572ff0eb904", (err, data) => {
+        testModel.find({}, (err, data) => {
             if(err){
                 res.send(err)
                 console.log(err);

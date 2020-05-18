@@ -21,7 +21,7 @@ const TodoIndividualItem = (props: TodoCreateIndividualItemInterface) => {
     function handleData() {
         
         const newTodoItem: TodoIndividualItemInterface = {
-            id: shortid.generate(),
+            id: shortid.generate(), //To use or not -- coz mongodb will generate an id too...
             task: formState,
             isCompleted: false,
             setTime: timeState
@@ -53,7 +53,9 @@ const TodoIndividualItem = (props: TodoCreateIndividualItemInterface) => {
                 onChange={event => handleInputChangeDate(event)}
                 required
             />
-            <button onClick={handleData}>Add task</button>
+            <button 
+            className="add-task"
+            onClick={handleData}>+</button>
         </div>
     
     )

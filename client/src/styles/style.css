@@ -10,6 +10,13 @@ li {
   width: 70%;
 }
 
+#displayForm {
+  display: none;
+  margin-left: 70rem;
+  margin-top: 10rem;
+  height: 70%;
+}
+
 .item-list {
   height: 100%;
   width: 40%;
@@ -69,10 +76,19 @@ li {
   border: 1px solid black;
 }
 
-#displayForm {
-  display: none;
-  margin-left: 70rem;
-  margin-top: 10rem;
-  height: 70%;
+.compose-btn {
+  margin-left: 20px;
+  margin-top: 25px;
+  font-size: 25px;
+  background: #76e1f7;
+  background: -webkit-gradient(linear, left top, right top, color-stop(23%, #76e1f7), color-stop(66%, #01f797));
+  background: linear-gradient(90deg, #76e1f7 23%, #01f797 66%);
+  border-radius: 15%;
+}
+
+.add-task {
+  font-size: 20px;
+  background: #20bff5;
+  border-radius: 100%;
 }
 /*# sourceMappingURL=style.css.map */

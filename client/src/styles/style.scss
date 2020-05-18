@@ -10,6 +10,13 @@ li {
     width: 70%;
 }
 
+#displayForm {
+    display: none;
+    margin-left: 70rem;
+    margin-top: 10rem;
+    height: 70%;
+}
+
 .item-list{
     height: 100%;
     width: 40%;
@@ -53,11 +60,17 @@ li {
     border: 1px solid black;
 }
 
+.compose-btn {
+    margin-left: 20px;
+    margin-top: 25px;
+    font-size: 25px;
+    background: rgb(118,225,247);
+    background: linear-gradient(90deg, rgba(118,225,247,1) 23%, rgba(1,247,151,1) 66%);
+    border-radius: 15%;
+}
 
-
-#displayForm {
-    display: none;
-    margin-left: 70rem;
-    margin-top: 10rem;
-    height: 70%;
+.add-task {
+    font-size: 20px;
+    background: rgb(32, 191, 245);
+    border-radius: 100%;
 }
