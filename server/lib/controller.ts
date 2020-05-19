@@ -1,9 +1,10 @@
 import App from './app'
 import mongoose from 'mongoose'
-import {TodoList} from './models'
+import {TodoList, UserLists} from './models'
 import {Request, Response} from 'express'
 
-const testModel = mongoose.model('test2', TodoList)
+const testModel = mongoose.model('test2', TodoList);
+const listModel = mongoose.model('list', UserLists);
 export class testController{
 
     testController(){
@@ -32,7 +33,77 @@ export class testController{
     }
 
     public testmethod(req: Request, res: Response) {
-        let db = App.db;    
+        let db = App.db;
+
+        let todoList1 = {
+            todoItems: [
+                {
+                    isCompeleted: false,
+                    task: "task1",
+                    id: "001",
+                    setTime: "09:09:12"
+                },
+                {
+                    isCompeleted: false,
+                    task: "task2",
+                    id: "002",
+                    setTime: "09:09:12"
+                },
+                {
+                    isCompeleted: false,
+                    task: "task3",
+                    id: "003",
+                    setTime: "09:09:12"
+                }
+            ]
+        }
+
+        let todoList2 = {
+            todoItems: [
+                {
+                    isCompeleted: false,
+                    task: "task11",
+                    id: "004",
+                    setTime: "19:09:12"
+                },
+                {
+                    isCompeleted: false,
+                    task: "task12",
+                    id: "005",
+                    setTime: "19:09:12"
+                },
+                {
+                    isCompeleted: false,
+                    task: "task13",
+                    id: "006",
+                    setTime: "19:09:12"
+                }
+            ],
+        }
+
+        let todos = {
+            "list1": todoList1, 
+            "list2": todoList2
+        }
+
+        let testObj = {
+            userid: {
+                username: "ashpak",
+                TodoLists: todos,
+            }
+        }
+        
+        console.log(testObj);
+
+        let newTest = new listModel(testObj);
+        listModel.find({}, (err, data) => {
+            if(err) {
+                console.log(err);
+            } else {
+                console.log(data, "data saved!");
+                res.send(data);
+            }
+        })
     }
 
     public getRecords(req: Request, res: Response) {

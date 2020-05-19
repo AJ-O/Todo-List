@@ -13,21 +13,24 @@ const App = () => {
 
   const [testTodos, setTodos] = React.useState<TodoIndividualItemInterface[]>([]);
   const [title, setTitle] = React.useState("");
-  const [list, setLists] = React.useState<TodoIndividualItemInterface[]>([]);
+  const [list, setLists] = React.useState([]);
 
-  React.useEffect( () =>  {
+  React.useEffect(() =>  {
     const options = {
         method: "GET",
         headers: {
             "Content-type": "application/json"
         }
+    };
+    
+    const a = async () => {
+      const d = await fetch("/testmethod", options);
+      const res = await d.json();
+      console.log(res);
+      setLists(res);
     }
-    fetch("/getLists", options).then(
-      response => response.json()
-    ).then((json) => {
-      console.log(json);
-    })
-}, [])
+    a();
+}, []) //2nd parameter because, whenever there is a change in the value of that array useffect will be called!
 
   function showForm(){
     let ele = document.getElementById("displayForm");
@@ -78,12 +81,12 @@ const App = () => {
 
   return (
     <div>
-      {/* <TodoList
+      <TodoList
         todos={list}
         handleTodoComplete={handleTodoComplete}
         handleTodoDelete={handleTodoDelete}
         handleTodoUpdate={handleTodoUpdate}
-      /> */}
+      />
 
       <button 
         className="compose-btn"

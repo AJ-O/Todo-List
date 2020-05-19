@@ -24,3 +24,17 @@ export const TodoList = new Schema({
         default: date.toDateString()
     }
 });
+
+export const UserLists = new Schema({
+    userid: {
+        username: {
+            type: String,
+            required: "Username is required!",
+        },
+
+        TodoLists: {
+            type: Object,
+            default: {}
+        }
+    }
+})
