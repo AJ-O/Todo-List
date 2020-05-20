@@ -6,33 +6,75 @@ import {render} from 'react-dom'
 import shortid from 'shortid'
 
 import TodoForm from './components/TodoForm'
-import {TodoIndividualItemInterface, TodoItemsInterface} from './interfaces'
 import TodoList from './components/TodoList';
+import UserLists from './components/UserLists'
+import {TodoIndividualItemInterface, TodoItemsInterface, individualListInterface, TodoFormInterface} from './interfaces'
+
 
 const App = () => {
 
   const [testTodos, setTodos] = React.useState<TodoIndividualItemInterface[]>([]);
   const [title, setTitle] = React.useState("");
-  const [list, setLists] = React.useState([]);
+  const [list, setLists] = React.useState<TodoIndividualItemInterface[]>([]);
+  const [testList, setTestLists] = React.useState<TodoFormInterface[]>([]);
 
-  React.useEffect(() =>  {
+
+  async function test() {
     const options = {
-        method: "GET",
-        headers: {
-            "Content-type": "application/json"
-        }
-    };
-    
-    const a = async () => {
-      const d = await fetch("/testmethod", options);
-      const res = await d.json();
-      console.log(res);
-      setLists(res);
+      method: "GET",
+      headers: {
+          "Content-type": "application/json"
+      }
     }
-    a();
-}, []) //2nd parameter because, whenever there is a change in the value of that array useffect will be called!
+
+      const data = await fetch("/getLists", options);
+      const res = await data.json();
+      if(res.status === "success") {
+        //Display all the lists -- with title
+        console.log(res.data);
+        let tasks = []
+        let data = res.data;
+        //console.log(data[0].userid.TodoLists.list1);
+        let userLists = data[0].userid.TodoLists;
+        //tasks = userLists.list1.todoItems;
+        console.log(userLists);
+        setTestLists(userLists); // causing an error because objects vs arrays!
+      } else {
+        alert("Error fetching data!")
+      }
+  };
+
+//   React.useEffect(() =>  {
+
+//     const options = {
+//         method: "GET",
+//         headers: {
+//             "Content-type": "application/json"
+//         }
+//     };
+    
+//     const a = async () => {
+//       const data = await fetch("/getLists", options);
+//       const res = await data.json();
+//       if(res.status === "success") {
+//         //Display all the lists -- with title
+//         console.log(res.data);
+//         let tasks = []
+//         let data = res.data;
+//         //console.log(data[0].userid.TodoLists.list1);
+//         let userLists = data[0].userid.TodoLists;
+//         tasks = userLists.list1.todoItems;
+//         console.log(tasks);
+//         setTodos(tasks);
+//       } else {
+//         alert("Error fetching data!")
+//       }
+//     }
+//     a();
+// }, []) //2nd parameter because, whenever there is a change in the value of that array useffect will be called!
 
   function showForm(){
+    test();
     let ele = document.getElementById("displayForm");
     if(ele) {
       ele.style.display = "block";
@@ -81,16 +123,17 @@ const App = () => {
 
   return (
     <div>
-      <TodoList
-        todos={list}
-        handleTodoComplete={handleTodoComplete}
-        handleTodoDelete={handleTodoDelete}
-        handleTodoUpdate={handleTodoUpdate}
-      />
 
       <button 
         className="compose-btn"
         onClick={showForm}>Create List</button>
+
+      <div className="user-lists">
+        <UserLists
+          listNames={testList}
+        />
+      </div>
+      
       <div id="displayForm">
           <TodoForm
               title={title}
@@ -102,7 +145,9 @@ const App = () => {
               handleTodoDelete={handleTodoDelete}
               handleTodoUpdate={handleTodoUpdate}
           />
-          <button onClick={addListToDatabase}>Finalize List</button>
+          <br></br>
+          <button onClick={addListToDatabase}
+          className="finalise-list-btn">Finalize List</button>
       </div>
     </div>
     

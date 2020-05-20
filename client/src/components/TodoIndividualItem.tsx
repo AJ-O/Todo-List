@@ -8,7 +8,8 @@ const TodoIndividualItem = (props: TodoCreateIndividualItemInterface) => {
     
     const [timeState, setTime] = React.useState(Date)
     const [formState, setFormState] = React.useState("")
-    const inputRef = React.useRef<HTMLInputElement>(null)
+    const inputTaskRef = React.useRef<HTMLInputElement>(null)
+    const inputDateRef = React.useRef<HTMLInputElement>(null)
 
     function handleInputChangeTask(event: React.ChangeEvent<HTMLInputElement>){
         setFormState(event.target.value)
@@ -28,9 +29,14 @@ const TodoIndividualItem = (props: TodoCreateIndividualItemInterface) => {
         }
         props.handleTodoCreate(newTodoItem)
 
-        if(inputRef && inputRef.current) {
-            inputRef.current.value = ""
+        if(inputTaskRef && inputTaskRef.current) {
+            inputTaskRef.current.value = ""
         }
+
+        if(inputDateRef && inputDateRef.current) {
+            inputDateRef.current.value = ""
+        }
+
     }
     
     return(
@@ -38,14 +44,14 @@ const TodoIndividualItem = (props: TodoCreateIndividualItemInterface) => {
         <div className="input-form">
             <input
                 id="taskId"
-                ref={inputRef}
+                ref={inputTaskRef}
                 type="text"
                 placeholder="Enter task"
                 onChange={event => handleInputChangeTask(event)}
                 required
             />
             <input
-                ref={inputRef}
+                ref={inputDateRef}
                 id="timeId"
                 type="time"
                 step="1"

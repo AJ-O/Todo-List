@@ -1,12 +1,22 @@
 import * as React from 'react'
 
-const header = (props: any) => {
+const Header = (props: any) => {
+
+    const [title, setTitle] = React.useState('');
+
+    function handleTitleChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setTitle(event.target.value)
+    }
 
     return(
-        <div>
-            {props.title}
+        <div className="list-title">
+            <input
+                type="text"
+                placeholder="Enter title...."
+                onChange={event => {handleTitleChange(event)}}
+            />
         </div>
     )
 }
 
-export default header
+export default Header

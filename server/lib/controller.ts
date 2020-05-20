@@ -36,6 +36,8 @@ export class testController{
         let db = App.db;
 
         let todoList1 = {
+            title: "ash",
+
             todoItems: [
                 {
                     isCompeleted: false,
@@ -59,6 +61,8 @@ export class testController{
         }
 
         let todoList2 = {
+            title: "jain",
+
             todoItems: [
                 {
                     isCompeleted: false,
@@ -81,10 +85,7 @@ export class testController{
             ],
         }
 
-        let todos = {
-            "list1": todoList1, 
-            "list2": todoList2
-        }
+        let todos = [todoList1, todoList2]
 
         let testObj = {
             userid: {
@@ -93,10 +94,11 @@ export class testController{
             }
         }
         
+        console.log("called test");
         console.log(testObj);
 
         let newTest = new listModel(testObj);
-        listModel.find({}, (err, data) => {
+        newTest.save((err, data) => {
             if(err) {
                 console.log(err);
             } else {
@@ -108,13 +110,16 @@ export class testController{
 
     public getRecords(req: Request, res: Response) {
         console.log("called get")
-        testModel.find({}, (err, data) => {
+        listModel.find({}, (err, data) => {
             if(err){
                 res.send(err)
                 console.log(err);
             } else{
-                console.log(data);
-                res.send(data);
+                let resObj = {
+                    status: "success",
+                    data: data
+                }
+                res.send(resObj);
                 console.log("called get all")
             }
         })

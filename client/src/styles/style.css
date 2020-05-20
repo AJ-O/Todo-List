@@ -15,6 +15,7 @@ li {
   margin-left: 70rem;
   margin-top: 10rem;
   height: 70%;
+  width: 25rem;
 }
 
 .item-list {
@@ -89,6 +90,29 @@ li {
 .add-task {
   font-size: 20px;
   background: #20bff5;
-  border-radius: 100%;
+  border-radius: 70%;
+  width: 35px;
+}
+
+.list-title input {
+  width: 100%;
+  font-style: bold;
+  height: 2rem;
+  background-color: lightblue;
+}
+
+.input-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
 }
 /*# sourceMappingURL=style.css.map */

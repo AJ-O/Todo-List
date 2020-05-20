@@ -36,3 +36,10 @@ export interface TodoItemsInterface {
     handleTodoDelete: (id: string) => void;
     handleTodoComplete: (id: string) => void;
 }
+export interface individualListInterface{
+    listNames: TodoFormInterface[]
+}
+
+export interface userListsInterface {
+    lists: individualListInterface[]
+}

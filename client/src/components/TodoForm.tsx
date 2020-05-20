@@ -10,7 +10,6 @@ const TodoForm = (props: TodoFormInterface) => {
         <div>
             <Header 
                 title={props.title}
-                
             />
             <TodoList
                 todos={props.subtasks}

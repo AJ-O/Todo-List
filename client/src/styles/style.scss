@@ -15,6 +15,7 @@ li {
     margin-left: 70rem;
     margin-top: 10rem;
     height: 70%;
+    width: 25rem;
 }
 
 .item-list{
@@ -72,5 +73,20 @@ li {
 .add-task {
     font-size: 20px;
     background: rgb(32, 191, 245);
-    border-radius: 100%;
+    border-radius: 70%;
+    width: 35px;
+}
+
+.list-title input{
+    width: 100%;
+    font-style: bold;
+    height: 2rem;
+    background-color: lightblue;
+}
+
+.input-form {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    flex-direction: row;
 }
