@@ -18,7 +18,6 @@ const App = () => {
   const [list, setLists] = React.useState<TodoIndividualItemInterface[]>([]);
   const [testList, setTestLists] = React.useState<TodoFormInterface[]>([]);
 
-
   async function test() {
     const options = {
       method: "GET",
@@ -34,11 +33,9 @@ const App = () => {
         console.log(res.data);
         let tasks = []
         let data = res.data;
-        //console.log(data[0].userid.TodoLists.list1);
         let userLists = data[0].userid.TodoLists;
-        //tasks = userLists.list1.todoItems;
         console.log(userLists);
-        setTestLists(userLists); // causing an error because objects vs arrays!
+        setTestLists(userLists);
       } else {
         alert("Error fetching data!")
       }
@@ -103,6 +100,13 @@ const App = () => {
 
   async function addListToDatabase() {
     //Add the list to the database, alert the user and show the lists
+    //Add title and id before adding to the database and the userid or email
+
+    const data = {
+      useremail: "ashishleiot@gmail.com",
+      
+    }
+
     const options = {
       method: "POST",
       headers: {

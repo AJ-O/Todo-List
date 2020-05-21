@@ -23,7 +23,7 @@ class App {
 
         let username = process.env.userName
         let pass = process.env.pass
-        let url = `mongodb+srv://${username}:${pass}@cluster0-lj2nn.mongodb.net/test?retryWrites=true&w=majority`
+        let url = `mongodb+srv://${username}:${pass}@cluster0-lj2nn.mongodb.net/TodoList-App?retryWrites=true&w=majority`
         
         mongoose.connect(url, {
             useNewUrlParser: true,

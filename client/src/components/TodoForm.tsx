@@ -9,7 +9,7 @@ const TodoForm = (props: TodoFormInterface) => {
     return(
         <div>
             <Header 
-                title={props.title}
+                title={props.title} //Add update and delete method to list
             />
             <TodoList
                 todos={props.subtasks}

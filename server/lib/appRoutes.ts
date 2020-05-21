@@ -16,15 +16,12 @@ export class Routes {
         //Test
         app.route("/createList").post(this.testController.createList);
 
-        app.route("/getLists").get(this.testController.getRecords);
+        app.route("/getLists,").get(this.testController.getRecords);
         
         app.route("/testmethod").get(this.testController.testmethod);
 
         //To implement!
         // app.route("/updateTask").post() 
-        
-
-        // app.route("/getLists").get()
 
         // app.route("/getIndividualList").get()
 

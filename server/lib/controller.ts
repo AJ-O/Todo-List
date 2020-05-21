@@ -14,7 +14,8 @@ export class testController{
 
     public createList(req: Request, res: Response) {
 
-        // let newTest = new testModel(req.body)
+        let newTest = new testModel(req.body)
+        
 
         let db = App.db
         db.collection("TodoList").insertMany(req.body).then(()=>{
@@ -36,7 +37,7 @@ export class testController{
         let db = App.db;
 
         let todoList1 = {
-            title: "ash",
+            title: "testTitle",
 
             todoItems: [
                 {
@@ -61,7 +62,7 @@ export class testController{
         }
 
         let todoList2 = {
-            title: "jain",
+            title: "testTitle2",
 
             todoItems: [
                 {
@@ -84,7 +85,6 @@ export class testController{
                 }
             ],
         }
-
         let todos = [todoList1, todoList2]
 
         let testObj = {
