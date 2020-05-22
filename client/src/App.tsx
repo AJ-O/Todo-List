@@ -8,6 +8,8 @@ import shortid from 'shortid'
 import TodoForm from './components/TodoForm'
 import TodoList from './components/TodoList';
 import UserLists from './components/UserLists'
+import OAuth from './components/OAuth'
+
 import {TodoIndividualItemInterface, TodoItemsInterface, individualListInterface, TodoFormInterface} from './interfaces'
 
 
@@ -17,6 +19,7 @@ const App = () => {
   const [title, setTitle] = React.useState("");
   const [list, setLists] = React.useState<TodoIndividualItemInterface[]>([]);
   const [testList, setTestLists] = React.useState<TodoFormInterface[]>([]);
+  const [isAuthorised, setAuthorisation] = React.useState(false)
 
   async function test() {
     const options = {
@@ -98,15 +101,26 @@ const App = () => {
 
   }
 
+  async function userAuthorization(userEmail: string) {
+    console.log(userEmail);
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: userEmail
+    }
+
+    const response = await fetch("/userdetails", options);
+    const json = await response.json()
+    console.log(json);
+    setAuthorisation(true);
+  }
+
   async function addListToDatabase() {
     //Add the list to the database, alert the user and show the lists
     //Add title and id before adding to the database and the userid or email
-
-    const data = {
-      useremail: "ashishleiot@gmail.com",
-      
-    }
-
+    
     const options = {
       method: "POST",
       headers: {
@@ -125,9 +139,8 @@ const App = () => {
     }
   }
 
-  return (
+  let content = isAuthorised ? (
     <div>
-
       <button 
         className="compose-btn"
         onClick={showForm}>Create List</button>
@@ -154,6 +167,41 @@ const App = () => {
           className="finalise-list-btn">Finalize List</button>
       </div>
     </div>
+  ) : (
+    <OAuth 
+      authorised={userAuthorization}
+    />
+  )
+
+  return (
+    // <div>
+    //   <button 
+    //     className="compose-btn"
+    //     onClick={showForm}>Create List</button>
+
+    //   <div className="user-lists">
+    //     <UserLists
+    //       listNames={testList}
+    //     />
+    //   </div>
+      
+    //   <div id="displayForm">
+    //       <TodoForm
+    //           title={title}
+    //           id={shortid.generate()}
+    //           subtasks={testTodos}
+    //           createTask={testTodos}
+    //           handleTodoCreate={handleTodoCreate}
+    //           handleTodoComplete={handleTodoComplete}
+    //           handleTodoDelete={handleTodoDelete}
+    //           handleTodoUpdate={handleTodoUpdate}
+    //       />
+    //       <br></br>
+    //       <button onClick={addListToDatabase}
+    //       className="finalise-list-btn">Finalize List</button>
+    //   </div>
+    // </div>
+    content
     
   );
 }

@@ -124,4 +124,12 @@ export class testController{
             }
         })
     }
+
+    public userDetails(req: Request, res: Response) {
+        console.log(req.body);
+        let obj = {
+            status: "success"
+        }
+        res.send(obj);
+    }
 }

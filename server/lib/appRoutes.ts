@@ -20,6 +20,8 @@ export class Routes {
         
         app.route("/testmethod").get(this.testController.testmethod);
 
+        app.route("/userdetails").post(this.testController.userDetails);
+
         //To implement!
         // app.route("/updateTask").post() 
 
