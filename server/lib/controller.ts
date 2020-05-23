@@ -1,10 +1,11 @@
 import App from './app'
 import mongoose from 'mongoose'
-import {TodoList, UserLists} from './models'
+import {TodoList, UserLists, Users} from './models'
 import {Request, Response} from 'express'
 
 const testModel = mongoose.model('test2', TodoList);
 const listModel = mongoose.model('list', UserLists);
+const userModel = mongoose.model('Users', Users);
 export class testController{
 
     testController(){
@@ -36,73 +37,88 @@ export class testController{
     public testmethod(req: Request, res: Response) {
         let db = App.db;
 
-        let todoList1 = {
-            title: "testTitle",
+        // let todoList1 = {
+        //     title: "testTitle",
 
-            todoItems: [
-                {
-                    isCompeleted: false,
-                    task: "task1",
-                    id: "001",
-                    setTime: "09:09:12"
-                },
-                {
-                    isCompeleted: false,
-                    task: "task2",
-                    id: "002",
-                    setTime: "09:09:12"
-                },
-                {
-                    isCompeleted: false,
-                    task: "task3",
-                    id: "003",
-                    setTime: "09:09:12"
-                }
-            ]
-        }
+        //     todoItems: [
+        //         {
+        //             isCompeleted: false,
+        //             task: "task1",
+        //             id: "001",
+        //             setTime: "09:09:12"
+        //         },
+        //         {
+        //             isCompeleted: false,
+        //             task: "task2",
+        //             id: "002",
+        //             setTime: "09:09:12"
+        //         },
+        //         {
+        //             isCompeleted: false,
+        //             task: "task3",
+        //             id: "003",
+        //             setTime: "09:09:12"
+        //         }
+        //     ]
+        // }
 
-        let todoList2 = {
-            title: "testTitle2",
+        // let todoList2 = {
+        //     title: "testTitle2",
 
-            todoItems: [
-                {
-                    isCompeleted: false,
-                    task: "task11",
-                    id: "004",
-                    setTime: "19:09:12"
-                },
-                {
-                    isCompeleted: false,
-                    task: "task12",
-                    id: "005",
-                    setTime: "19:09:12"
-                },
-                {
-                    isCompeleted: false,
-                    task: "task13",
-                    id: "006",
-                    setTime: "19:09:12"
-                }
-            ],
-        }
-        let todos = [todoList1, todoList2]
+        //     todoItems: [
+        //         {
+        //             isCompeleted: false,
+        //             task: "task11",
+        //             id: "004",
+        //             setTime: "19:09:12"
+        //         },
+        //         {
+        //             isCompeleted: false,
+        //             task: "task12",
+        //             id: "005",
+        //             setTime: "19:09:12"
+        //         },
+        //         {
+        //             isCompeleted: false,
+        //             task: "task13",
+        //             id: "006",
+        //             setTime: "19:09:12"
+        //         }
+        //     ],
+        // }
+        // let todos = [todoList1, todoList2]
 
-        let testObj = {
-            userid: {
-                username: "ashpak",
-                TodoLists: todos,
-            }
-        }
+        // let testObj = {
+        //     user: {
+        //         useremail: "ashishleiot@gmail.com",
+        //         username: "ashpak",
+        //         TodoLists: todos,
+        //     }
+        // }
         
-        console.log("called test");
-        console.log(testObj);
+        // console.log("called test");
+        // console.log(testObj);
 
-        let newTest = new listModel(testObj);
-        newTest.save((err, data) => {
-            if(err) {
-                console.log(err);
+        // let newTest = new listModel(testObj);
+        // newTest.save((err, data) => {
+        //     if(err) {
+        //         console.log(err);
+        //     } else {
+        //         console.log(data, "data saved!");
+        //         res.send(data);
+        //     }
+        // })
+
+        let obj = {
+            useremail: "ashishleiot@gmail.com"
+        }
+
+        let newUser = new userModel(obj)
+        newUser.save((err, data) => {
+            if (err) {
+                console.log(err)
             } else {
-                console.log(data, "data saved!");
+                console.log(data, "data saved");
                 res.send(data);
             }
         })
@@ -111,11 +127,29 @@ export class testController{
     public getRecords(req: Request, res: Response) {
         console.log("called get")
 
+        let userId: String;
         let useremail: string = req.params.useremail
         useremail = useremail.replace(":", "");
         console.log("useremail: ", useremail)
+        
+        //Get the object id using email
 
-        listModel.find({}, (err, data) => {
+        userModel.find({useremail: useremail}, (err, data) => {
+            if(err){
+                res.send(err)
+                console.log(err);
+            } else{
+                let resObj = {
+                    status: "success",
+                    data: data
+                }
+                res.send(resObj);
+                userId = data["id"];
+                console.log("called get all")
+            }
+        })
+
+        listModel.findById(userId, (err, data) => {
             if(err){
                 res.send(err)
                 console.log(err);

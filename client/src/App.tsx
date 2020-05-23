@@ -23,7 +23,7 @@ const App = () => {
   const [title, setTitle] = React.useState("");
   //const [list, setLists] = React.useState<TodoIndividualItemInterface[]>([]);
   const [testList, setTestLists] = React.useState<TodoFormInterface[]>([]);
-  const [user, setUser] = React.useState("")
+  let [user, setUser] = React.useState("")
   const clientId = process.env.REACT_APP_CLIENT_ID
 
 //   React.useEffect(() =>  {
@@ -121,7 +121,7 @@ const App = () => {
     } else {
       alert("Error fetching data!")
     }
-    setUser(json.useremail);
+    user = json.useremail;
   }
 
   function logoutSuccess() {
