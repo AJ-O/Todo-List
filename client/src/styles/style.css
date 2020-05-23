@@ -115,4 +115,14 @@ li {
       -ms-flex-direction: row;
           flex-direction: row;
 }
+
+.google-login-btn {
+  margin-left: 200px;
+  margin-top: 200px;
+  width: 190px;
+  color: lightblue;
+  -webkit-text-decoration: lightblue;
+          text-decoration: lightblue;
+  font-size: 5rem;
+}
 /*# sourceMappingURL=style.css.map */

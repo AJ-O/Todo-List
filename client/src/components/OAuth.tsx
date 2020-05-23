@@ -12,13 +12,16 @@ const GOauth = (props: any) => {
     }
 
     return (
-        <GoogleLogin
-            clientId="387693868495-lnpfo6dneu2mn38g6b347tdh5ufrsoqg.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={handleSuccess}
-            onFailure={handleError}
-            isSignedIn={true}
-        />
+        <div className="google-login-btn">
+            <GoogleLogin
+                clientId={props.clientId}
+                buttonText="Login with Google"
+                onSuccess={handleSuccess}
+                onFailure={handleError}
+                isSignedIn={true}
+                cookiePolicy={'single_host_origin'}
+            />
+        </div>
     )
 }
 

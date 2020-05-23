@@ -110,6 +110,11 @@ export class testController{
 
     public getRecords(req: Request, res: Response) {
         console.log("called get")
+
+        let useremail: string = req.params.useremail
+        useremail = useremail.replace(":", "");
+        console.log("useremail: ", useremail)
+
         listModel.find({}, (err, data) => {
             if(err){
                 res.send(err)

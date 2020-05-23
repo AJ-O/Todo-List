@@ -16,7 +16,7 @@ export class Routes {
         //Test
         app.route("/createList").post(this.testController.createList);
 
-        app.route("/getLists,").get(this.testController.getRecords);
+        app.route("/getLists/:useremail").get(this.testController.getRecords);
         
         app.route("/testmethod").get(this.testController.testmethod);
 
