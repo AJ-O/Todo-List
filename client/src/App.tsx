@@ -19,7 +19,7 @@ dotenv.config()
 
 const App = () => {
 
-  const [testTodos, setTodos] = React.useState<TodoIndividualItemInterface[]>([]);
+  const [todos, setTodos] = React.useState<TodoIndividualItemInterface[]>([]);
   const [title, setTitle] = React.useState("");
   //const [list, setLists] = React.useState<TodoIndividualItemInterface[]>([]);
   const [testList, setTestLists] = React.useState<TodoFormInterface[]>([]);
@@ -65,7 +65,7 @@ const App = () => {
 
   function handleTodoCreate(todo: TodoIndividualItemInterface) {
     console.log("create called!");
-    const newTodoState: TodoIndividualItemInterface[] = [...testTodos];
+    const newTodoState: TodoIndividualItemInterface[] = [...todos];
     newTodoState.push(todo);
     setTodos(newTodoState);
   }
@@ -101,27 +101,34 @@ const App = () => {
 
     console.log(json);
 
-    const getOptions = {
-      method: "GET",
-      headers: {
-          "Content-type": "application/json"
+    if (json.userExists) {
+
+      const getOptions = {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json"
+        }
       }
+  
+      const data = await fetch(`/getLists/:${userEmail}`, getOptions);
+      const res = await data.json();
+      if(res.status === "success") {
+        //Display all the lists -- with title
+        console.log(res.data);
+        // let tasks = []
+        // let data = res.data;
+        // let userLists = data[0].userid.TodoLists;
+        // console.log(userLists);
+        // setTestLists(userLists);
+      } else {
+        alert("Error fetching data!")
+      }
+      setUser(userEmail);
+    } else {
+      setUser(userEmail);
+      //console.log(json);
     }
 
-    const data = await fetch(`/getLists/:${userEmail}`, getOptions);
-    const res = await data.json();
-    if(res.status === "success") {
-      //Display all the lists -- with title
-      console.log(res.data);
-      let tasks = []
-      let data = res.data;
-      let userLists = data[0].userid.TodoLists;
-      console.log(userLists);
-      setTestLists(userLists);
-    } else {
-      alert("Error fetching data!")
-    }
-    user = json.useremail;
   }
 
   function logoutSuccess() {
@@ -131,9 +138,9 @@ const App = () => {
   async function addListToDatabase() {
     //Add the list to the database, alert the user and show the lists
     //Add title and id before adding to the database and the userid or email
-
+    setTitle(title);
     const dataObj = {
-      todos: testTodos,
+      todos: todos,
       title: title,
       id: shortid.generate(),
       email: user
@@ -150,6 +157,8 @@ const App = () => {
     const response = await fetch("/createList", options);
     const json = await response.json();
 
+    console.log(json);
+
     let ele = document.getElementById("displayForm");
     if(ele) {
       setTodos([]);
@@ -163,11 +172,13 @@ const App = () => {
         className="compose-btn"
         onClick={showForm}>Create List</button>
 
-      <GoogleLogout
-        clientId={clientId ? clientId : ""}
-        buttonText="Logout"
-        onLogoutSuccess={logoutSuccess}
-      />
+      <div className="logout-btn">
+        <GoogleLogout
+          clientId={clientId ? clientId : ""}
+          buttonText="Logout"
+          onLogoutSuccess={logoutSuccess}
+        />
+      </div>
 
       <div className="user-lists">
         <UserLists
@@ -179,8 +190,8 @@ const App = () => {
           <TodoForm
             title={title}
             id={shortid.generate()}
-            subtasks={testTodos}
-            createTask={testTodos}
+            subtasks={todos}
+            createTask={todos}
             handleTodoCreate={handleTodoCreate}
             handleTodoComplete={handleTodoComplete}
             handleTodoDelete={handleTodoDelete}

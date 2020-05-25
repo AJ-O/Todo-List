@@ -125,4 +125,9 @@ li {
           text-decoration: lightblue;
   font-size: 5rem;
 }
+
+.logout-btn {
+  float: right;
+  margin-top: 15px;
+}
 /*# sourceMappingURL=style.css.map */

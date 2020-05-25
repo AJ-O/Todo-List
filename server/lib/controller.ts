@@ -1,9 +1,8 @@
 import App from './app'
 import mongoose from 'mongoose'
-import {TodoList, UserLists} from './models'
+import {UserLists} from './models'
 import {Request, Response} from 'express'
 
-const testModel = mongoose.model('test2', TodoList);
 const listModel = mongoose.model('list', UserLists);
 
 export class testController{
@@ -14,19 +13,9 @@ export class testController{
     }
 
     public createList(req: Request, res: Response) {
-
-        let newTest = new testModel(req.body)
         
-        //Find user email, then push to TodoLists
-        
-    //     // newTest.save((err, data) => {
-    //     //     if(err){
-    //     //         console.log(err)
-    //     //         res.send(err)
-    //     //     }
-    //     //     console.log("called!")
-    //     //     res.json(data);
-    //     // });
+        console.log(req.body)
+        res.send({status:"testing"});
     }
 
     public testmethod(req: Request, res: Response) {
@@ -119,5 +108,42 @@ export class testController{
                 console.log("called get all");
             }
         })
+    }
+
+    public userDetails(req: Request, res: Response) {
+
+        let useremail = req.body.useremail;
+        listModel.find({useremail: useremail}, (err, data) => {
+            let retObj = {};
+            if (err) {
+                console.log(err);
+                retObj["status"] = 400;
+                res.send(retObj);
+            } else {
+
+                if (data.length == 0) {
+                    console.log(data, data.length)
+                    retObj["userExists"] = false;
+                    retObj["code"] = 200;
+
+                    let newUser = new listModel({useremail: useremail});
+                    newUser.save((err, data) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log(data);
+                        }
+                        res.send(retObj);
+                    });
+
+                } else {
+                    retObj["code"] = 200;
+                    retObj["userExists"] = true;
+                    retObj["lists"] = data[0]["TodoLists"];
+                    res.send(retObj);
+                }
+            }
+            console.log(retObj);
+        });
     }
 }
