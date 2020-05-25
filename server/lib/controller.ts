@@ -1,11 +1,11 @@
 import App from './app'
 import mongoose from 'mongoose'
-import {TodoList, UserLists, Users} from './models'
+import {TodoList, UserLists} from './models'
 import {Request, Response} from 'express'
 
 const testModel = mongoose.model('test2', TodoList);
 const listModel = mongoose.model('list', UserLists);
-const userModel = mongoose.model('Users', Users);
+
 export class testController{
 
     testController(){
@@ -17,126 +17,98 @@ export class testController{
 
         let newTest = new testModel(req.body)
         
-
-        let db = App.db
-        db.collection("TodoList").insertMany(req.body).then(()=>{
-            res.json({response: "success"})
-        }).catch((err) => {
-            res.send(err)
-        })
-        // newTest.save((err, data) => {
-        //     if(err){
-        //         console.log(err)
-        //         res.send(err)
-        //     }
-        //     console.log("called!")
-        //     res.json(data);
-        // });
+        //Find user email, then push to TodoLists
+        
+    //     // newTest.save((err, data) => {
+    //     //     if(err){
+    //     //         console.log(err)
+    //     //         res.send(err)
+    //     //     }
+    //     //     console.log("called!")
+    //     //     res.json(data);
+    //     // });
     }
 
     public testmethod(req: Request, res: Response) {
         let db = App.db;
-
-        // let todoList1 = {
-        //     title: "testTitle",
-
-        //     todoItems: [
-        //         {
-        //             isCompeleted: false,
-        //             task: "task1",
-        //             id: "001",
-        //             setTime: "09:09:12"
-        //         },
-        //         {
-        //             isCompeleted: false,
-        //             task: "task2",
-        //             id: "002",
-        //             setTime: "09:09:12"
-        //         },
-        //         {
-        //             isCompeleted: false,
-        //             task: "task3",
-        //             id: "003",
-        //             setTime: "09:09:12"
-        //         }
-        //     ]
-        // }
-
-        // let todoList2 = {
-        //     title: "testTitle2",
-
-        //     todoItems: [
-        //         {
-        //             isCompeleted: false,
-        //             task: "task11",
-        //             id: "004",
-        //             setTime: "19:09:12"
-        //         },
-        //         {
-        //             isCompeleted: false,
-        //             task: "task12",
-        //             id: "005",
-        //             setTime: "19:09:12"
-        //         },
-        //         {
-        //             isCompeleted: false,
-        //             task: "task13",
-        //             id: "006",
-        //             setTime: "19:09:12"
-        //         }
-        //     ],
-        // }
-        // let todos = [todoList1, todoList2]
-
-        // let testObj = {
-        //     user: {
-        //         useremail: "ashishleiot@gmail.com",
-        //         username: "ashpak",
-        //         TodoLists: todos,
-        //     }
-        // }
         
-        // console.log("called test");
-        // console.log(testObj);
+        let todoList1 = {
+            title: "testTitle",
 
-        // let newTest = new listModel(testObj);
-        // newTest.save((err, data) => {
-        //     if(err) {
-        //         console.log(err);
-        //     } else {
-        //         console.log(data, "data saved!");
-        //         res.send(data);
-        //     }
-        // })
-
-        let obj = {
-            useremail: "ashishleiot@gmail.com"
+            todoItems: [
+                {
+                    isCompeleted: false,
+                    task: "task1",
+                    id: "001",
+                    setTime: "09:09:12"
+                },
+                {
+                    isCompeleted: false,
+                    task: "task2",
+                    id: "002",
+                    setTime: "09:09:12"
+                },
+                {
+                    isCompeleted: false,
+                    task: "task3",
+                    id: "003",
+                    setTime: "09:09:12"
+                }
+            ]
         }
 
-        let newUser = new userModel(obj)
-        newUser.save((err, data) => {
-            if (err) {
+        let todoList2 = {
+            title: "testTitle2",
+
+            todoItems: [
+                {
+                    isCompeleted: false,
+                    task: "task11",
+                    id: "004",
+                    setTime: "19:09:12"
+                },
+                {
+                    isCompeleted: false,
+                    task: "task12",
+                    id: "005",
+                    setTime: "19:09:12"
+                },
+                {
+                    isCompeleted: false,
+                    task: "task13",
+                    id: "006",
+                    setTime: "19:09:12"
+                }
+            ],
+        }
+        let todos = [todoList1, todoList2]
+
+        let testObj = {
+            useremail: "abc@gmail.com",
+            TodoLists: todos
+        }
+
+        let lm = new listModel(testObj);
+        lm.save((err, data) => {
+            if(err) {
                 console.log(err)
             } else {
-                console.log(data, "data saved");
                 res.send(data);
             }
-        })
+        });
     }
 
     public getRecords(req: Request, res: Response) {
-        console.log("called get")
+        console.log("called get");
 
         let userId: String;
-        let useremail: string = req.params.useremail
+        let useremail: string = req.params.useremail;
         useremail = useremail.replace(":", "");
-        console.log("useremail: ", useremail)
-        
-        //Get the object id using email
+        console.log("useremail: ", useremail);
 
-        userModel.find({useremail: useremail}, (err, data) => {
+        listModel.find({useremail: useremail}, (err, data) => {
             if(err){
-                res.send(err)
+                res.send(err);
                 console.log(err);
             } else{
                 let resObj = {
@@ -144,31 +116,8 @@ export class testController{
                     data: data
                 }
                 res.send(resObj);
-                userId = data["id"];
-                console.log("called get all")
+                console.log("called get all");
             }
         })
-
-        listModel.findById(userId, (err, data) => {
-            if(err){
-                res.send(err)
-                console.log(err);
-            } else{
-                let resObj = {
-                    status: "success",
-                    data: data
-                }
-                res.send(resObj);
-                console.log("called get all")
-            }
-        })
-    }
-
-    public userDetails(req: Request, res: Response) {
-        console.log(req.body);
-        let obj = {
-            status: "success"
-        }
-        res.send(obj);
     }
 }
