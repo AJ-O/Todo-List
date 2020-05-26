@@ -82,6 +82,11 @@ const App = () => {
 
   }
 
+  function handleTitleSet(newTitle: string) {
+    console.log(newTitle);
+    setTitle(newTitle);
+  }
+
   async function userAuthorization(userEmail: string) {
 
     let obj = {
@@ -126,7 +131,6 @@ const App = () => {
       setUser(userEmail);
     } else {
       setUser(userEmail);
-      //console.log(json);
     }
 
   }
@@ -138,7 +142,7 @@ const App = () => {
   async function addListToDatabase() {
     //Add the list to the database, alert the user and show the lists
     //Add title and id before adding to the database and the userid or email
-    setTitle(title);
+
     const dataObj = {
       todos: todos,
       title: title,
@@ -166,7 +170,7 @@ const App = () => {
     }
   }
 
-  let content = user != "" ? (
+  let content = user !== "" ? (
     <div>
       <button 
         className="compose-btn"
@@ -196,6 +200,7 @@ const App = () => {
             handleTodoComplete={handleTodoComplete}
             handleTodoDelete={handleTodoDelete}
             handleTodoUpdate={handleTodoUpdate}
+            handleTitleSet={handleTitleSet}
           />
           <br></br>
           <button onClick={addListToDatabase}

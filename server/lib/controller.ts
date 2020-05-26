@@ -14,8 +14,13 @@ export class testController{
 
     public createList(req: Request, res: Response) {
         
-        console.log(req.body)
-        res.send({status:"testing"});
+        console.log(req.body);
+        //remove email
+        listModel.updateOne({useremail: req.body.email}, {$push: {TodoLists: req.body}}, done)
+        function done() {
+            console.log("done")
+            res.send({status: "success"});
+        }
     }
 
     public testmethod(req: Request, res: Response) {

@@ -6,10 +6,12 @@ import TodoIndividualItem from './TodoIndividualItem'
 import {TodoFormInterface} from './../interfaces'
 
 const TodoForm = (props: TodoFormInterface) => {
-    return(
+
+    return (
         <div>
             <Header 
                 title={props.title} //Add update and delete method to list
+                handleTitleSet={props.handleTitleSet}
             />
             <TodoList
                 todos={props.subtasks}
