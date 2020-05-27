@@ -120,11 +120,11 @@ const App = () => {
       if(res.status === "success") {
         //Display all the lists -- with title
         console.log(res.data);
-        // let tasks = []
-        // let data = res.data;
-        // let userLists = data[0].userid.TodoLists;
-        // console.log(userLists);
-        // setTestLists(userLists);
+        let tasks = []
+        let data = res.data;
+        let userLists = data[0].TodoLists;
+        console.log(userLists);
+        setTestLists(userLists);
       } else {
         alert("Error fetching data!")
       }

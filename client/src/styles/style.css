@@ -12,10 +12,9 @@ li {
 
 #displayForm {
   display: none;
-  margin-left: 70rem;
-  margin-top: 10rem;
+  float: left;
   height: 70%;
-  width: 25rem;
+  width: 24rem;
 }
 
 .item-list {
@@ -130,5 +129,36 @@ li {
   float: right;
   margin-top: 15px;
   margin-right: 15px;
+}
+
+.user-lists {
+  width: 150px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.unordered-list-items {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.ind-list {
+  font-size: 20px;
+  -webkit-text-decoration: #7dfaf4;
+          text-decoration: #7dfaf4;
+}
+
+.ind-list:hover {
+  font-size: 22px;
+  background-color: #a8dff8;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s;
+          transition-duration: 0.4s;
 }
 /*# sourceMappingURL=style.css.map */
