@@ -14,7 +14,7 @@ const TodoForm = (props: TodoFormInterface) => {
                 handleTitleSet={props.handleTitleSet}
             />
             <TodoList
-                todos={props.subtasks}
+                todos={props.todos}
                 handleTodoComplete={props.handleTodoComplete}
                 handleTodoDelete={props.handleTodoDelete}
                 handleTodoUpdate={props.handleTodoUpdate}

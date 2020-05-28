@@ -8,11 +8,10 @@ import dotenv from 'dotenv'
 import {GoogleLogout} from 'react-google-login'
 
 import TodoForm from './components/TodoForm'
-import TodoList from './components/TodoList';
 import UserLists from './components/UserLists'
 import OAuth from './components/OAuth'
 
-import {TodoIndividualItemInterface, TodoItemsInterface, individualListInterface, TodoFormInterface} from './interfaces'
+import {TodoIndividualItemInterface, TodoFormInterface} from './interfaces'
 
 
 dotenv.config()
@@ -21,8 +20,7 @@ const App = () => {
 
   const [todos, setTodos] = React.useState<TodoIndividualItemInterface[]>([]);
   const [title, setTitle] = React.useState("");
-  //const [list, setLists] = React.useState<TodoIndividualItemInterface[]>([]);
-  const [testList, setTestLists] = React.useState<TodoFormInterface[]>([]);
+  const [lists, setLists] = React.useState<TodoFormInterface[]>([]);
   let [user, setUser] = React.useState("")
   const clientId = process.env.REACT_APP_CLIENT_ID
 
@@ -120,11 +118,10 @@ const App = () => {
       if(res.status === "success") {
         //Display all the lists -- with title
         console.log(res.data);
-        let tasks = []
         let data = res.data;
         let userLists = data[0].TodoLists;
         console.log(userLists);
-        setTestLists(userLists);
+        setLists(userLists);
       } else {
         alert("Error fetching data!")
       }
@@ -186,7 +183,12 @@ const App = () => {
 
       <div className="user-lists">
         <UserLists
-          listNames={testList}
+          listNames={lists}
+          handleTodoCreate={handleTodoCreate}
+          handleTodoComplete={handleTodoComplete}
+          handleTodoDelete={handleTodoDelete}
+          handleTodoUpdate={handleTodoUpdate}
+          handleTitleSet={handleTitleSet}
         />
       </div>
       
@@ -194,7 +196,7 @@ const App = () => {
           <TodoForm
             title={title}
             id={shortid.generate()}
-            subtasks={todos}
+            todos={todos}
             createTask={todos}
             handleTodoCreate={handleTodoCreate}
             handleTodoComplete={handleTodoComplete}

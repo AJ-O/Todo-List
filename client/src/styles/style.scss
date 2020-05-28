@@ -12,11 +12,10 @@ li {
 
 #displayForm {
     display: none;
-    float: left;
-    // margin-left: 70rem;
-    // margin-top: 10rem;
+    float: right;
     height: 70%;
     width: 24rem;
+    margin-right: 5.5rem;
 }
 
 .item-list{
@@ -103,28 +102,30 @@ li {
 
 .logout-btn {
     float: right;
-    margin-top: 15px;
-    margin-right: 15px;
+    margin-top: 2rem;
+    margin-right: 2rem;
 }
 
 .user-lists {
-    width: 150px;
     display: flex;
 }
 
 .unordered-list-items {
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
     justify-content: space-evenly;
+    gap: 1.3rem;
 }
 
 .ind-list {
-    font-size: 20px;
-    text-decoration: rgb(125, 250, 244);
+    font-size: 1.4rem;
+    background: rgb(255,191,73);
+    background: linear-gradient(90deg, rgba(255,191,73,1) 32%, rgba(254,129,129,1) 79%);
 }
 
 .ind-list:hover {
-    font-size: 22px;
+    font-size: 1.5rem;
     background-color: rgb(168, 223, 248);
     cursor: pointer;
-    transition-duration: 0.4s;
+    transition-duration: 0.1s;
 }

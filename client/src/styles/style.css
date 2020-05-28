@@ -12,9 +12,10 @@ li {
 
 #displayForm {
   display: none;
-  float: left;
+  float: right;
   height: 70%;
   width: 24rem;
+  margin-right: 5.5rem;
 }
 
 .item-list {
@@ -127,38 +128,42 @@ li {
 
 .logout-btn {
   float: right;
-  margin-top: 15px;
-  margin-right: 15px;
+  margin-top: 2rem;
+  margin-right: 2rem;
 }
 
 .user-lists {
-  width: 150px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
 .unordered-list-items {
-  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
+  gap: 1.3rem;
 }
 
 .ind-list {
-  font-size: 20px;
-  -webkit-text-decoration: #7dfaf4;
-          text-decoration: #7dfaf4;
+  font-size: 1.4rem;
+  background: #ffbf49;
+  background: -webkit-gradient(linear, left top, right top, color-stop(32%, #ffbf49), color-stop(79%, #fe8181));
+  background: linear-gradient(90deg, #ffbf49 32%, #fe8181 79%);
 }
 
 .ind-list:hover {
-  font-size: 22px;
+  font-size: 1.5rem;
   background-color: #a8dff8;
   cursor: pointer;
-  -webkit-transition-duration: 0.4s;
-          transition-duration: 0.4s;
+  -webkit-transition-duration: 0.1s;
+          transition-duration: 0.1s;
 }
 /*# sourceMappingURL=style.css.map */
