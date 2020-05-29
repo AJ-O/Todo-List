@@ -8,7 +8,7 @@ export interface TodoIndividualItemInterface {
 
 export interface TodoCreateIndividualItemInterface{
     todo: TodoIndividualItemInterface[],
-    handleTodoCreate: (todo: TodoIndividualItemInterface) => void
+    handleTodoCreate: (todo: TodoIndividualItemInterface, todos?: TodoIndividualItemInterface[]) => void
 }
 
 

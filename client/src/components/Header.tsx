@@ -22,6 +22,7 @@ const Header = (props: any) => {
         <div className="list-title">
             <input
                 type="text"
+                value={props.title}
                 placeholder="Enter title...."
                 onChange={event => {handleTitleChange(event)}}
                 onKeyPress={event => {handleTitleUpdate(event)}}

@@ -20,7 +20,7 @@ const TodoForm = (props: TodoFormInterface) => {
                 handleTodoUpdate={props.handleTodoUpdate}
             />
             <TodoIndividualItem
-                todo={props.createTask}
+                todo={props.todos}
                 handleTodoCreate={props.handleTodoCreate}
             />
         </div>

@@ -16,6 +16,14 @@ li {
   height: 70%;
   width: 24rem;
   margin-right: 5.5rem;
+  border-radius: 10%;
+  background: #438eff;
+  background: -webkit-gradient(linear, left top, right top, color-stop(25%, rgba(67, 142, 255, 0.87577)), color-stop(56%, rgba(66, 211, 255, 0.892577)));
+  background: linear-gradient(90deg, rgba(67, 142, 255, 0.87577) 25%, rgba(66, 211, 255, 0.892577) 56%);
+}
+
+#displayForm ul {
+  padding: 0px;
 }
 
 .item-list {
@@ -70,6 +78,12 @@ li {
 
 .item-remove {
   padding: 8px;
+  font-size: 1rem;
+}
+
+.item-remove:hover {
+  cursor: pointer;
+  font-size: 1.3rem;
 }
 
 .todo-form input {
@@ -88,17 +102,32 @@ li {
 }
 
 .add-task {
-  font-size: 20px;
-  background: #20bff5;
+  font-size: 1.5rem;
+  background: white;
   border-radius: 70%;
-  width: 35px;
+  width: 2.2rem;
+  height: 2.2rem;
+  margin-right: 0.4rem;
+}
+
+.add-task:hover {
+  background: #c5fbff;
+  width: 2.4rem;
+  height: 2.4rem;
+  font-size: 1.7rem;
 }
 
 .list-title input {
-  width: 100%;
-  font-style: bold;
+  width: 85%;
   height: 2rem;
-  background-color: lightblue;
+  margin-left: 1.5rem;
+  background: transparent;
+  border-style: none;
+  font-size: 2rem;
+}
+
+.list-title input:focus {
+  border-bottom: 3px solid rgba(18, 255, 196, 0.685);
 }
 
 .input-form {
@@ -146,6 +175,8 @@ li {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
@@ -154,16 +185,20 @@ li {
 
 .ind-list {
   font-size: 1.4rem;
+  border-radius: 3%;
   background: #ffbf49;
   background: -webkit-gradient(linear, left top, right top, color-stop(32%, #ffbf49), color-stop(79%, #fe8181));
   background: linear-gradient(90deg, #ffbf49 32%, #fe8181 79%);
 }
 
 .ind-list:hover {
-  font-size: 1.5rem;
   background-color: #a8dff8;
   cursor: pointer;
   -webkit-transition-duration: 0.1s;
           transition-duration: 0.1s;
+}
+
+.finalise-list-btn {
+  margin-left: 30%;
 }
 /*# sourceMappingURL=style.css.map */

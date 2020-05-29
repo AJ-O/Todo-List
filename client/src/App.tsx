@@ -21,7 +21,7 @@ const App = () => {
   const [todos, setTodos] = React.useState<TodoIndividualItemInterface[]>([]);
   const [title, setTitle] = React.useState("");
   const [lists, setLists] = React.useState<TodoFormInterface[]>([]);
-  let [user, setUser] = React.useState("")
+  const [user, setUser] = React.useState("")
   const clientId = process.env.REACT_APP_CLIENT_ID
 
 //   React.useEffect(() =>  {
@@ -68,12 +68,13 @@ const App = () => {
     setTodos(newTodoState);
   }
 
-  function handleTodoUpdate() {
-    
+  function handleTodoUpdate(event: React.ChangeEvent<HTMLInputElement>, id: string) {
+    const newTodoState: TodoIndividualItemInterface[] = [...todos]
+    newTodoState.find((todo: TodoIndividualItemInterface) => todo.id === id)!.task = event.target.value;
+    setTodos(newTodoState)
   }
 
   function handleTodoDelete() {
-
   }
 
   function handleTodoComplete() {
@@ -133,7 +134,7 @@ const App = () => {
   }
 
   function logoutSuccess() {
-    console.log("logged out");
+    setUser("");
   }
 
   async function addListToDatabase() {

@@ -20,15 +20,18 @@ const TodoIndividualItem = (props: TodoCreateIndividualItemInterface) => {
     }
 
     function handleData() {
-        
         const newTodoItem: TodoIndividualItemInterface = {
-            id: shortid.generate(), //To use or not -- coz mongodb will generate an id too...
+            id: shortid.generate(),
             task: formState,
             isCompleted: false,
             setTime: timeState
         }
-        props.handleTodoCreate(newTodoItem)
 
+        if(props.todo.length === 0){
+            props.handleTodoCreate(newTodoItem, [])
+        } else {
+            props.handleTodoCreate(newTodoItem, props.todo);
+        }
         if(inputTaskRef && inputTaskRef.current) {
             inputTaskRef.current.value = ""
         }
