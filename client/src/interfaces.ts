@@ -7,8 +7,9 @@ export interface TodoIndividualItemInterface {
 }
 
 export interface TodoCreateIndividualItemInterface{
+    id?: String;
     todo: TodoIndividualItemInterface[],
-    handleTodoCreate: (todo: TodoIndividualItemInterface, todos?: TodoIndividualItemInterface[]) => void
+    handleTodoCreate: (todo: TodoIndividualItemInterface, todos?: TodoIndividualItemInterface[], id?: String) => void
 }
 
 
@@ -39,7 +40,7 @@ export interface TodoItemsInterface {
 }
 export interface individualListInterface{
     listNames: TodoFormInterface[];
-
+    useremail: String;
     //Create new functions....
     handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string) => void;
     handleTodoDelete: (id: string) => void;

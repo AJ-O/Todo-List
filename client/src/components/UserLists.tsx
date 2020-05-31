@@ -1,21 +1,35 @@
 import React from 'react'
 import TodoForm from './TodoForm'
-import {individualListInterface, TodoFormInterface, TodoIndividualItemInterface} from './../interfaces'
-//Change type of props
-//Create an interface which accepts a list of TodoLists
-    //onclick function - to display the userlist, default display none
+import {individualListInterface, TodoFormInterface, TodoIndividualItemInterface, TodoItemsInterface} from './../interfaces'
 
-    //issue -- set todos state for every individual list
 const UserList = (props: individualListInterface) => {
 
-    let [todos, setTodos] = React.useState<TodoIndividualItemInterface[]>([]);
-    
+    let [todos, setTodos] = React.useState<TodoIndividualItemInterface[]>([]); 
+
 //create another handletodocreate with values of todos
-    function handleTodoCreate(todo: TodoIndividualItemInterface, subtasks? : any) {
-        const newTodoState: TodoIndividualItemInterface[] = [...subtasks];
-        newTodoState.push(todo);
-        console.log(newTodoState);
-        setTodos(newTodoState);
+    async function handleTodoCreate(todo: TodoIndividualItemInterface, subtasks? : any, id? : String) {
+        //add to the list using post then get only that list again...
+
+        let options = {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(todo)
+        };
+
+        const response = await fetch(`/addTodo/${props.useremail}/${id}`, options)
+        const json = await response.json();
+
+        if(json.code !== 200) {
+            console.error(json.message);
+        } else {
+            const response = await fetch(`/getLists/${props.useremail}`)
+            const json = await response.json();
+            console.log(json);
+            setTodos(json["data"][0]["TodoLists"]) //update state, either, reload or use state...
+        }
+
     }
 
     function handleTodoComplete() {
@@ -36,12 +50,12 @@ const UserList = (props: individualListInterface) => {
 
     return(
             <ul className="unordered-list-items">
-                {props.listNames.map((list: TodoFormInterface) => (
+                {props.listNames.map((list: TodoFormInterface, index: number) => (
                     <li key={list.id} className="ind-list">
                         <TodoForm
                             id={list.id}
                             title={list.title}
-                            todos={list.todos}
+                            todos={list.todos} //need to give state variable, state variable need to initalised with list.todos
                             createTask={todos}
                             handleTodoCreate={handleTodoCreate}
                             handleTodoComplete={props.handleTodoComplete}

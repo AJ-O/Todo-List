@@ -1,9 +1,9 @@
 import {Request, Response} from "express"
-import {testController} from './controller'
+import {Controller} from './controller'
 
 export class Routes {
 
-    public testController: testController = new testController();
+    public Controller: Controller = new Controller();
 
     public routes(app: any): void {
 
@@ -14,14 +14,15 @@ export class Routes {
         });
 
         //Test
-        app.route("/createList").post(this.testController.createList);
+        app.route("/createList").post(this.Controller.createList);
 
-        app.route("/getLists/:useremail").get(this.testController.getRecords);
+        app.route("/userdetails").post(this.Controller.userDetails);
+
+        app.route("/getLists/:useremail").get(this.Controller.getRecords);
         
-        app.route("/testmethod").get(this.testController.testmethod);
-
-        app.route("/userdetails").post(this.testController.userDetails);
-
+        app.route("/testmethod").get(this.Controller.testmethod);
+        
+        app.route("/addTodo/:useremail/:id").post(this.Controller.addTodo);
         //To implement!
         // app.route("/updateTask").post() 
 

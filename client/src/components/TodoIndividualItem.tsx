@@ -28,9 +28,9 @@ const TodoIndividualItem = (props: TodoCreateIndividualItemInterface) => {
         }
 
         if(props.todo.length === 0){
-            props.handleTodoCreate(newTodoItem, [])
+            props.handleTodoCreate(newTodoItem)
         } else {
-            props.handleTodoCreate(newTodoItem, props.todo);
+            props.handleTodoCreate(newTodoItem, props.todo, props.id);
         }
         if(inputTaskRef && inputTaskRef.current) {
             inputTaskRef.current.value = ""

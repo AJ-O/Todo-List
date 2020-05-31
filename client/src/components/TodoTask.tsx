@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import {TodoItemTaskInterface} from './../interfaces'
+import {FaTrashAlt} from 'react-icons/fa';
 
 const TodoTask = (props: TodoItemTaskInterface) => {
     return(
@@ -29,7 +30,7 @@ const TodoTask = (props: TodoItemTaskInterface) => {
             </div>
 
             <div className="item-remove" onClick={() => props.handleTodoDelete(props.todo.id)}>
-                X
+                <FaTrashAlt/>
             </div>
 
         </div>

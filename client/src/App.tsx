@@ -121,7 +121,7 @@ const App = () => {
         console.log(res.data);
         let data = res.data;
         let userLists = data[0].TodoLists;
-        console.log(userLists);
+        console.log(userLists); //convert object to array
         setLists(userLists);
       } else {
         alert("Error fetching data!")
@@ -144,8 +144,7 @@ const App = () => {
     const dataObj = {
       todos: todos,
       title: title,
-      id: shortid.generate(),
-      email: user
+      id: shortid.generate()
     }
 
     const options = {
@@ -172,7 +171,11 @@ const App = () => {
     <div>
       <button 
         className="compose-btn"
-        onClick={showForm}>Create List</button>
+        onClick={showForm}>
+
+        Create List
+
+      </button>
 
       <div className="logout-btn">
         <GoogleLogout
@@ -184,6 +187,7 @@ const App = () => {
 
       <div className="user-lists">
         <UserLists
+          useremail={user}
           listNames={lists}
           handleTodoCreate={handleTodoCreate}
           handleTodoComplete={handleTodoComplete}
