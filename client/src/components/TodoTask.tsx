@@ -29,7 +29,7 @@ const TodoTask = (props: TodoItemTaskInterface) => {
                 />
             </div>
 
-            <div className="item-remove" onClick={() => props.handleTodoDelete(props.todo.id)}>
+            <div className="item-remove" onClick={() => props.handleTodoDelete(props.id, props.todo.id)}>
                 <FaTrashAlt/>
             </div>
 

@@ -158,29 +158,6 @@ export class Controller{
         let todoListId = req.params.id;
         let todo = req.body;
         console.log(useremail, todoListId, todo);
-        // listModel.find({useremail: useremail}, (err, data) => {
-        //     if(err) {
-        //         console.log(err);
-        //         res.send({
-        //             code: 400,
-        //             message: err
-        //         })
-        //     } else {
-        //         console.log(data[0]["TodoLists"]);
-
-        //         let TodoLists = data[0]["TodoLists"];
-
-        //         TodoLists.forEach(todoList => {
-                    
-        //         });
-
-        //         let retObj = {
-        //             code: 200,
-        //             message: "success"    
-        //         };
-        //         res.send(retObj);
-        //     }
-        // })
         listModel.findOneAndUpdate({useremail: useremail, "TodoLists.id": todoListId}, {$push: {"TodoLists.$.todos": todo}}, (err, data) => {
             if(err) {
                 res.send({
@@ -197,5 +174,37 @@ export class Controller{
                 })
             }
         });
+    }
+
+    public deleteTodoItem(req: Request, res: Response) {
+        let useremail = req.params.useremail;
+        let deleteTodoId = req.params.todoId;
+        let todoListId = req.params.listId;
+        console.log(useremail, todoListId, deleteTodoId);
+
+        listModel.findOneAndUpdate({useremail: useremail, "TodoLists.id": todoListId}, {$pull: {"TodoLists.$.todos": {id: deleteTodoId}}}, (err, data) => {
+            if(err) {
+                console.log(err);
+                res.send({
+                    message: err,
+                    code: 400
+                })
+            } else {
+                console.log("data: ", data["TodoLists"]);
+                res.send({
+                    message: "success",
+                    code: 200
+                })
+            }
+        });
+
+        //deletes the whole list
+        // listModel.findOneAndUpdate({useremail: useremail}, {$pull: {TodoLists: {todos: {$elemMatch: {id: deleteTodoId}}}}}, (err, data) => {
+        //     if(err) {
+        //         console.log(err);
+        //     } else {
+        //         console.log("data: ", data["TodoLists"]);
+        //     }
+        // })
     }
 }

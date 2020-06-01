@@ -23,6 +23,9 @@ export class Routes {
         app.route("/testmethod").get(this.Controller.testmethod);
         
         app.route("/addTodo/:useremail/:id").post(this.Controller.addTodo);
+        
+        app.route("/deleteTodoItem/:useremail/:listId/:todoId").delete(this.Controller.deleteTodoItem);
+
         //To implement!
         // app.route("/updateTask").post() 
 

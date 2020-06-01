@@ -27,7 +27,7 @@ const UserList = (props: individualListInterface) => {
             const response = await fetch(`/getLists/${props.useremail}`)
             const json = await response.json();
             console.log(json);
-            setTodos(json["data"][0]["TodoLists"]) //update state, either, reload or use state...
+            //setTodos(json["data"][0]["TodoLists"]); //to update state, either, reload or use state...
         }
 
     }
@@ -36,8 +36,18 @@ const UserList = (props: individualListInterface) => {
 
     }
 
-    function handleTodoDelete() {
+    async function handleTodoDelete(listId?: String, todoId? : String) {
+        let options = {
+            method: "DELETE"
+        }
 
+        const response = await fetch(`/deleteTodoItem/${props.useremail}/${listId}/${todoId}`, options);
+        const json = await response.json();
+        if(json.code === 200) {
+            const response = await fetch(`/getLists/${props.useremail}`)
+            const json = await response.json();
+            console.log(json);
+        }
     }
 
     function handleTodoUpdate() {
@@ -59,7 +69,7 @@ const UserList = (props: individualListInterface) => {
                             createTask={todos}
                             handleTodoCreate={handleTodoCreate}
                             handleTodoComplete={props.handleTodoComplete}
-                            handleTodoDelete={props.handleTodoDelete}
+                            handleTodoDelete={handleTodoDelete}
                             handleTodoUpdate={props.handleTodoUpdate}
                             handleTitleSet={props.handleTitleSet}
                         />

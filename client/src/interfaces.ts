@@ -7,9 +7,9 @@ export interface TodoIndividualItemInterface {
 }
 
 export interface TodoCreateIndividualItemInterface{
-    id?: String;
+    id?: string;
     todo: TodoIndividualItemInterface[],
-    handleTodoCreate: (todo: TodoIndividualItemInterface, todos?: TodoIndividualItemInterface[], id?: String) => void
+    handleTodoCreate: (todo: TodoIndividualItemInterface, todos?: TodoIndividualItemInterface[], id?: string) => void
 }
 
 
@@ -27,12 +27,14 @@ export interface TodoFormInterface {
 
 export interface TodoItemTaskInterface {
     todo: TodoIndividualItemInterface,
+    id: string;
     handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string) => void;
-    handleTodoDelete: (id: string) => void;
+    handleTodoDelete: (listId: string, todoId: string) => void;
     handleTodoComplete: (id: string) => void;
 }
 
 export interface TodoItemsInterface {
+    id: string;
     todos: TodoIndividualItemInterface[],
     handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string) => void;
     handleTodoDelete: (id: string) => void;
