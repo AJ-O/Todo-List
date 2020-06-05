@@ -7,7 +7,7 @@ const TodoTask = (props: TodoItemTaskInterface) => {
     return(
         <div className="individual-item">
 
-            <div onClick={() => props.handleTodoComplete(props.todo.id)}>
+            <div onClick={() => props.handleTodoComplete(props.id, props.todo.id)}>
                 {props.todo.isCompleted ? (
                     <span className="todo-item-checked">&#10003;</span>
                 ) : (

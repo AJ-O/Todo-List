@@ -26,6 +26,7 @@ export class Routes {
         
         app.route("/deleteTodoItem/:useremail/:listId/:todoId").delete(this.Controller.deleteTodoItem);
 
+        app.route("/completeTodo/:useremail").post(this.Controller.modifyTodoStatus);
         //To implement!
         // app.route("/updateTask").post() 
 

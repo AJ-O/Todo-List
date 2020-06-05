@@ -4,10 +4,29 @@ import {individualListInterface, TodoFormInterface, TodoIndividualItemInterface,
 
 const UserList = (props: individualListInterface) => {
 
-    let [todos, setTodos] = React.useState<TodoIndividualItemInterface[]>([]); 
+    const [todos, setTodos] = React.useState<TodoIndividualItemInterface[]>([]); 
+
+
+//TRY using usestate...
+
+    // React.useEffect(() => {
+    //     const options = {
+    //         method: "GET",
+    //         headers: {
+    //             "Content-type": "application/json"
+    //         }
+    //     }
+
+    //     const getDetails = async () => {
+    //         const response = await fetch(`/getLists/${props.useremail}`, options)
+    //         const json = await response.json();
+    //         setTodos(json["data"][0]["TodoLists"]);
+    //     }
+    //     getDetails();
+    // }, []);
 
 //create another handletodocreate with values of todos
-    async function handleTodoCreate(todo: TodoIndividualItemInterface, subtasks? : any, id? : String) {
+    async function handleTodoCreate(todo: TodoIndividualItemInterface, id? : String) {
         //add to the list using post then get only that list again...
 
         let options = {
@@ -29,10 +48,21 @@ const UserList = (props: individualListInterface) => {
             console.log(json);
             //setTodos(json["data"][0]["TodoLists"]); //to update state, either, reload or use state...
         }
-
     }
 
-    function handleTodoComplete() {
+    async function handleTodoComplete(listId: string, todoId: string) {
+        
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({listId: listId, todoId: todoId})
+        }
+
+        const response = await fetch(`/completeTodo/${props.useremail}`, options);
+        const json = await response.json();
+        console.log(json);
 
     }
 
@@ -51,7 +81,7 @@ const UserList = (props: individualListInterface) => {
     }
 
     function handleTodoUpdate() {
-
+        
     }
 
     function handleTitleSet() {
@@ -68,9 +98,9 @@ const UserList = (props: individualListInterface) => {
                             todos={list.todos} //need to give state variable, state variable need to initalised with list.todos
                             createTask={todos}
                             handleTodoCreate={handleTodoCreate}
-                            handleTodoComplete={props.handleTodoComplete}
+                            handleTodoComplete={handleTodoComplete}
                             handleTodoDelete={handleTodoDelete}
-                            handleTodoUpdate={props.handleTodoUpdate}
+                            handleTodoUpdate={handleTodoUpdate}
                             handleTitleSet={props.handleTitleSet}
                         />
                     </li>

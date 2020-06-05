@@ -12,6 +12,7 @@ import UserLists from './components/UserLists'
 import OAuth from './components/OAuth'
 
 import {TodoIndividualItemInterface, TodoFormInterface} from './interfaces'
+import TodoIndividualItem from './components/TodoIndividualItem';
 
 
 dotenv.config()
@@ -69,16 +70,22 @@ const App = () => {
   }
 
   function handleTodoUpdate(event: React.ChangeEvent<HTMLInputElement>, id: string) {
-    const newTodoState: TodoIndividualItemInterface[] = [...todos]
+    const newTodoState: TodoIndividualItemInterface[] = [...todos];
     newTodoState.find((todo: TodoIndividualItemInterface) => todo.id === id)!.task = event.target.value;
     setTodos(newTodoState)
   }
 
-  function handleTodoDelete() {
+  function handleTodoDelete(listId: string, todoId: string) {
+    console.log("delete called!", listId, todoId);
+    todos.forEach(todo => {
+      console.log(todo.id);
+    });
+    const newTodoState: TodoIndividualItemInterface[] = todos.filter((todo: TodoIndividualItemInterface) => todo.id !== todoId)
+    setTodos(newTodoState);
   }
 
   function handleTodoComplete() {
-
+    
   }
 
   function handleTitleSet(newTitle: string) {
@@ -117,11 +124,10 @@ const App = () => {
       const data = await fetch(`/getLists/:${userEmail}`, getOptions);
       const res = await data.json();
       if(res.status === "success") {
-        //Display all the lists -- with title
         console.log(res.data);
         let data = res.data;
         let userLists = data[0].TodoLists;
-        console.log(userLists); //convert object to array
+        console.log(userLists);
         setLists(userLists);
       } else {
         alert("Error fetching data!")

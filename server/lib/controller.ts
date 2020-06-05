@@ -180,7 +180,6 @@ export class Controller{
         let useremail = req.params.useremail;
         let deleteTodoId = req.params.todoId;
         let todoListId = req.params.listId;
-        console.log(useremail, todoListId, deleteTodoId);
 
         listModel.findOneAndUpdate({useremail: useremail, "TodoLists.id": todoListId}, {$pull: {"TodoLists.$.todos": {id: deleteTodoId}}}, (err, data) => {
             if(err) {
@@ -206,5 +205,28 @@ export class Controller{
         //         console.log("data: ", data["TodoLists"]);
         //     }
         // })
+    }
+
+    public modifyTodoStatus(req: Request, res: Response) {
+        
+        const useremail = req.params.useremail;
+        const listId = req.body.listId;
+        const todoId = req.body.todoId;
+        console.log(useremail, listId, todoId);
+        listModel.findOneAndUpdate({useremail: useremail, "TodoLists.id": listId}, {$set: {"TodoLists.$.todos.$[id].isCompleted": true}}, {arrayFilters: [{"id.id": todoId}]}, (err, data) => {
+            if(err) {
+                res.send({
+                    code: 400,
+                    err: err
+                });
+            } else {
+                console.log("done");
+                res.send({
+                    code: 200,
+                    message: "success"
+                });
+            }
+        })
+
     }
 }
