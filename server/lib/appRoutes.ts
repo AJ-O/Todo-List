@@ -14,7 +14,7 @@ export class Routes {
         });
 
         //Test
-        app.route("/createList").post(this.Controller.createList);
+        app.route("/createList/:useremail").post(this.Controller.createList);
 
         app.route("/userdetails").post(this.Controller.userDetails);
 

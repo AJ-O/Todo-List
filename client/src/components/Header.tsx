@@ -2,7 +2,7 @@ import * as React from 'react'
 
 const Header = (props: any) => {
 
-    const [title, setTitle] = React.useState('');
+    const [title, setTitle] = React.useState(props.title);
 
     function handleTitleChange(event: React.ChangeEvent<HTMLInputElement>) {
         setTitle(event.target.value)
@@ -22,7 +22,7 @@ const Header = (props: any) => {
         <div className="list-title">
             <input
                 type="text"
-                value={props.title}
+                value={title}
                 placeholder="Enter title...."
                 onChange={event => {handleTitleChange(event)}}
                 onKeyPress={event => {handleTitleUpdate(event)}}

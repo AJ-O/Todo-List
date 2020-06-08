@@ -1,5 +1,19 @@
+//------TODO-------------
+
+//------FRONTEND CHANGES-------
+//Time also needs to be updated!
+//input fields can't be empty!
+//Checkout routing -- ?
+//Work on material ui
+
+//---------BACKEND CHANGES-------
+//Title, task, date update
+
+//---------EXTRA FEATURES--------
+//Add labels too...
+
+
 import React from 'react';
-//import logo from './logo.svg';
 import './App.css';
 import './styles/style.css'
 import {render} from 'react-dom'
@@ -12,9 +26,6 @@ import UserLists from './components/UserLists'
 import OAuth from './components/OAuth'
 
 import {TodoIndividualItemInterface, TodoFormInterface} from './interfaces'
-import TodoIndividualItem from './components/TodoIndividualItem';
-
-
 dotenv.config()
 
 const App = () => {
@@ -69,9 +80,13 @@ const App = () => {
     setTodos(newTodoState);
   }
 
-  function handleTodoUpdate(event: React.ChangeEvent<HTMLInputElement>, id: string) {
+  function handleTodoUpdate(event: React.ChangeEvent<HTMLInputElement>, id: string, type: string) {
     const newTodoState: TodoIndividualItemInterface[] = [...todos];
-    newTodoState.find((todo: TodoIndividualItemInterface) => todo.id === id)!.task = event.target.value;
+    if(type === "time") {
+      newTodoState.find((todo: TodoIndividualItemInterface) => todo.id === id)!.setTime = event.target.value;
+    } else if(type === "task") {
+      newTodoState.find((todo: TodoIndividualItemInterface) => todo.id === id)!.task = event.target.value;
+    }
     setTodos(newTodoState)
   }
 
@@ -161,11 +176,10 @@ const App = () => {
       body: JSON.stringify(dataObj)
     };
 
-    const response = await fetch("/createList", options);
+    const response = await fetch(`/createList/${user}`, options);
     const json = await response.json();
 
-    console.log(json);
-
+    //if success hide the element and alert the user
     let ele = document.getElementById("displayForm");
     if(ele) {
       setTodos([]);

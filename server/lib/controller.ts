@@ -15,9 +15,9 @@ export class Controller{
 
     public createList(req: Request, res: Response) {
         
-        console.log(req.body);
-        //extract todo list id, set that as they key
-        listModel.updateOne({useremail: req.body.email}, {$push: {TodoLists: req.body}}, done) //operator to push to object
+        let useremail = req.params.useremail;
+        console.log(useremail);
+        listModel.findOneAndUpdate({useremail: useremail}, {$push: {TodoLists: req.body}}, done) //operator to push to object
         function done() {
             console.log("done")
             res.send({status: "success"});

@@ -18,7 +18,7 @@ export interface TodoFormInterface {
     id: string,
     todos: TodoIndividualItemInterface[],
     createTask: TodoIndividualItemInterface[],
-    handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string) => void;
+    handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string, type: string) => void;
     handleTodoDelete: (listId: string, todoId: string) => void;
     handleTodoComplete: (listId: string, todoId: string) => void;
     handleTitleSet: (title: string) => void;
@@ -28,7 +28,7 @@ export interface TodoFormInterface {
 export interface TodoItemTaskInterface {
     todo: TodoIndividualItemInterface,
     id: string;
-    handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string) => void;
+    handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string, type: string) => void;
     handleTodoDelete: (listId: string, todoId: string) => void;
     handleTodoComplete: (listId: string, todoId: string) => void;
 }
@@ -36,7 +36,7 @@ export interface TodoItemTaskInterface {
 export interface TodoItemsInterface {
     id: string;
     todos: TodoIndividualItemInterface[],
-    handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string) => void;
+    handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string, type: string) => void;
     handleTodoDelete: (listId: string, todoId: string) => void;
     handleTodoComplete: (listId: string, todoId: string) => void;
 }
@@ -45,7 +45,7 @@ export interface individualListInterface{
     listNames: TodoFormInterface[];
     useremail: String;
     //Create new functions....
-    handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string) => void;
+    handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string, type: string) => void;
     handleTodoDelete: (listId: string, todoId: string) => void;
     handleTodoComplete: (listId: string, todoId: string) => void;
     handleTitleSet: (title: string) => void;

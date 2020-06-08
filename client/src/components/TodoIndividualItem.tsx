@@ -1,5 +1,7 @@
 import * as React from 'react'
 import shortid from 'shortid'
+import DateFnsUtils from "@date-io/date-fns";
+import {DateTimePicker, MuiPickersUtilsProvider} from '@material-ui/pickers'
 //import DatePicker from 'react-datepicker'
 
 import {TodoCreateIndividualItemInterface, TodoIndividualItemInterface} from './../interfaces'
@@ -7,6 +9,7 @@ import {TodoCreateIndividualItemInterface, TodoIndividualItemInterface} from './
 const TodoIndividualItem = (props: TodoCreateIndividualItemInterface) => {
     
     const [timeState, setTime] = React.useState(Date)
+    //const [newTimeState, setNewTimeState] = React.useState()
     const [formState, setFormState] = React.useState("")
     const inputTaskRef = React.useRef<HTMLInputElement>(null)
     const inputDateRef = React.useRef<HTMLInputElement>(null)
@@ -41,6 +44,10 @@ const TodoIndividualItem = (props: TodoCreateIndividualItemInterface) => {
         }
 
     }
+
+    // function handleDateChange(time: any) {
+    //     setNewTimeState(time);
+    // }
     
     return(
 
@@ -62,6 +69,15 @@ const TodoIndividualItem = (props: TodoCreateIndividualItemInterface) => {
                 onChange={event => handleInputChangeDate(event)}
                 required
             />
+
+            {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <DateTimePicker
+                    label="DateTimePicker"
+                    inputVariant="outlined"
+                    value={newTimeState}
+                    onChange={(time) => {handleDateChange(time)}}
+                />
+            </MuiPickersUtilsProvider> */}
             <button 
             className="add-task"
             onClick={handleData}>+</button>

@@ -23,7 +23,7 @@ const UserList = (props: individualListInterface) => {
     //         setTodos(json["data"][0]["TodoLists"]);
     //     }
     //     getDetails();
-    // }, []);
+    // }, [todos]);
 
 //create another handletodocreate with values of todos
     async function handleTodoCreate(todo: TodoIndividualItemInterface, id? : String) {
@@ -80,8 +80,14 @@ const UserList = (props: individualListInterface) => {
         }
     }
 
-    function handleTodoUpdate() {
-        
+    //Change element text in real time
+    function handleTodoUpdate(event: any, listId: string) {
+        let editBtn = document.getElementById(listId);
+        if(editBtn?.textContent === "Edit") {
+            editBtn.textContent = "Update Changes";
+        } else if(editBtn){
+            editBtn.textContent = "Edit";
+        }
     }
 
     function handleTitleSet() {
@@ -92,6 +98,7 @@ const UserList = (props: individualListInterface) => {
             <ul className="unordered-list-items">
                 {props.listNames.map((list: TodoFormInterface, index: number) => (
                     <li key={list.id} className="ind-list">
+                        <button className="edit-btn" id={list.id} onClick={(event) => {handleTodoUpdate(event, list.id)}}>Edit</button>
                         <TodoForm
                             id={list.id}
                             title={list.title}
