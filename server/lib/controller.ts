@@ -20,7 +20,10 @@ export class Controller{
         listModel.findOneAndUpdate({useremail: useremail}, {$push: {TodoLists: req.body}}, done) //operator to push to object
         function done() {
             console.log("done")
-            res.send({status: "success"});
+            res.send({
+                status: "success",
+                code: 200
+            });
         }
     }
 

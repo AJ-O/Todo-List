@@ -90,6 +90,17 @@ const UserList = (props: individualListInterface) => {
         }
     }
 
+    function updateValueInDatabase(event: any, listId: string, todoId: string, type: string) {
+        if(event.key === "Enter") {
+            //console.log(event.target.value);
+            if(type === "task") {
+                console.log(event.target.value, type);
+            } else {
+                console.log(event.target.value, type);
+            }
+        }
+    }
+
     function handleTitleSet() {
 
     }
@@ -107,8 +118,9 @@ const UserList = (props: individualListInterface) => {
                             handleTodoCreate={handleTodoCreate}
                             handleTodoComplete={handleTodoComplete}
                             handleTodoDelete={handleTodoDelete}
-                            handleTodoUpdate={handleTodoUpdate}
+                            //handleTodoUpdate={handleTodoUpdate}
                             handleTitleSet={props.handleTitleSet}
+                            updateValueInDatabase={updateValueInDatabase}
                         />
                     </li>
                 )

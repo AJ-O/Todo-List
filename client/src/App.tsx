@@ -3,8 +3,9 @@
 //------FRONTEND CHANGES-------
 //Time also needs to be updated!
 //input fields can't be empty!
+//Real time update?
 //Checkout routing -- ?
-//Work on material ui
+//Work on material ui time picker
 
 //---------BACKEND CHANGES-------
 //Title, task, date update
@@ -80,15 +81,15 @@ const App = () => {
     setTodos(newTodoState);
   }
 
-  function handleTodoUpdate(event: React.ChangeEvent<HTMLInputElement>, id: string, type: string) {
-    const newTodoState: TodoIndividualItemInterface[] = [...todos];
-    if(type === "time") {
-      newTodoState.find((todo: TodoIndividualItemInterface) => todo.id === id)!.setTime = event.target.value;
-    } else if(type === "task") {
-      newTodoState.find((todo: TodoIndividualItemInterface) => todo.id === id)!.task = event.target.value;
-    }
-    setTodos(newTodoState)
-  }
+  // function handleTodoUpdate(event: React.ChangeEvent<HTMLInputElement>, id: string, type: string) {
+  //   const newTodoState: TodoIndividualItemInterface[] = [...todos];
+  //   if(type === "time") {
+  //     newTodoState.find((todo: TodoIndividualItemInterface) => todo.id === id)!.setTime = event.target.value;
+  //   } else if(type === "task") {
+  //     newTodoState.find((todo: TodoIndividualItemInterface) => todo.id === id)!.task = event.target.value;
+  //   }
+  //   setTodos(newTodoState)
+  // }
 
   function handleTodoDelete(listId: string, todoId: string) {
     console.log("delete called!", listId, todoId);
@@ -162,28 +163,36 @@ const App = () => {
     //Add the list to the database, alert the user and show the lists
     //Add title and id before adding to the database and the userid or email
 
-    const dataObj = {
-      todos: todos,
-      title: title,
-      id: shortid.generate()
-    }
-
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-type" : "application/json"
-      },
-      body: JSON.stringify(dataObj)
-    };
-
-    const response = await fetch(`/createList/${user}`, options);
-    const json = await response.json();
-
-    //if success hide the element and alert the user
-    let ele = document.getElementById("displayForm");
-    if(ele) {
-      setTodos([]);
-      ele.style.display = "none";
+    if(title === ""){
+      alert("Title is empty, kindly enter title");
+    } else {
+      const dataObj = {
+        todos: todos,
+        title: title,
+        id: shortid.generate()
+      }
+  
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-type" : "application/json"
+        },
+        body: JSON.stringify(dataObj)
+      };
+  
+      const response = await fetch(`/createList/${user}`, options);
+      const json = await response.json();
+  
+      if(json.code === 200) {
+        let ele = document.getElementById("displayForm");
+        if(ele) {
+          setTodos([]);
+          ele.style.display = "none";
+          alert("List created!");
+        }
+      } else {
+        alert("Error occured!");
+      }
     }
   }
 
@@ -212,7 +221,7 @@ const App = () => {
           handleTodoCreate={handleTodoCreate}
           handleTodoComplete={handleTodoComplete}
           handleTodoDelete={handleTodoDelete}
-          handleTodoUpdate={handleTodoUpdate}
+          //handleTodoUpdate={handleTodoUpdate}
           handleTitleSet={handleTitleSet}
         />
       </div>
@@ -226,7 +235,7 @@ const App = () => {
             handleTodoCreate={handleTodoCreate}
             handleTodoComplete={handleTodoComplete}
             handleTodoDelete={handleTodoDelete}
-            handleTodoUpdate={handleTodoUpdate}
+            //handleTodoUpdate={handleTodoUpdate}
             handleTitleSet={handleTitleSet}
           />
           <br></br>

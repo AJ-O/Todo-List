@@ -7,6 +7,9 @@ import {FaTrashAlt} from 'react-icons/fa';
 
 const TodoTask = (props: TodoItemTaskInterface) => {
 
+    const [task, setTask] = React.useState(props.todo.task);
+    const [time, setTime] = React.useState(props.todo.setTime);
+
     return(
         <div className="individual-item">
 
@@ -20,15 +23,20 @@ const TodoTask = (props: TodoItemTaskInterface) => {
 
             <div className="user-task">
                 <input
-                    value={props.todo.task}
-                    onChange={(event:React.ChangeEvent<HTMLInputElement>) => props.handleTodoUpdate(event, props.todo.id, "task")} 
+                    // value={props.todo.task}
+                    // onChange={(event:React.ChangeEvent<HTMLInputElement>) => props.handleTodoUpdate(event, props.todo.id, "task")}
+                    value={task}
+                    onChange={(event:React.ChangeEvent<HTMLInputElement>) => setTask(event.target.value)}
+                    onKeyPress={(event: React.KeyboardEvent) => props.updateValueInDatabase? props.updateValueInDatabase(event, props.id, props.todo.id, "task"): ""} 
+                    //Empty because this will be triggered when create list calls the update function
                 />
             </div>
 
             <div className="set-timer">
                 <input
-                    value={props.todo.setTime}
-                    onChange={(event:React.ChangeEvent<HTMLInputElement>) => props.handleTodoUpdate(event, props.todo.id, "time")}
+                    value={time}
+                    onChange={(event:React.ChangeEvent<HTMLInputElement>) => setTime(event.target.value)}
+                    onKeyPress={(event: React.KeyboardEvent) => props.updateValueInDatabase? props.updateValueInDatabase(event, props.id, props.todo.id, "time"): ""}
                 />
             </div>
 

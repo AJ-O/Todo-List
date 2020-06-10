@@ -18,7 +18,8 @@ const TodoForm = (props: TodoFormInterface) => {
                 todos={props.todos}
                 handleTodoComplete={props.handleTodoComplete}
                 handleTodoDelete={props.handleTodoDelete}
-                handleTodoUpdate={props.handleTodoUpdate}
+                //handleTodoUpdate={props.handleTodoUpdate}
+                updateValueInDatabase={props.updateValueInDatabase}
             />
             <TodoIndividualItem
                 id={props.id}

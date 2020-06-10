@@ -18,34 +18,37 @@ export interface TodoFormInterface {
     id: string,
     todos: TodoIndividualItemInterface[],
     createTask: TodoIndividualItemInterface[],
-    handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string, type: string) => void;
+    //handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string, type: string) => void;
     handleTodoDelete: (listId: string, todoId: string) => void;
     handleTodoComplete: (listId: string, todoId: string) => void;
     handleTitleSet: (title: string) => void;
-    handleTodoCreate: (todo: TodoIndividualItemInterface) => void
+    handleTodoCreate: (todo: TodoIndividualItemInterface) => void;
+    updateValueInDatabase?: (event: React.KeyboardEvent, listId: string, todoId: string, type: string) => void;
 }
 
 export interface TodoItemTaskInterface {
     todo: TodoIndividualItemInterface,
     id: string;
-    handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string, type: string) => void;
+    //handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string, type: string) => void;
     handleTodoDelete: (listId: string, todoId: string) => void;
     handleTodoComplete: (listId: string, todoId: string) => void;
+    updateValueInDatabase?: (event: React.KeyboardEvent, listId: string, todoId: string, type: string) => void;
 }
 
 export interface TodoItemsInterface {
     id: string;
     todos: TodoIndividualItemInterface[],
-    handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string, type: string) => void;
+    //handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string, type: string) => void;
     handleTodoDelete: (listId: string, todoId: string) => void;
     handleTodoComplete: (listId: string, todoId: string) => void;
+    updateValueInDatabase?: (event: React.KeyboardEvent, listId: string, todoId: string, type: string) => void;
 }
 
 export interface individualListInterface{
     listNames: TodoFormInterface[];
     useremail: String;
     //Create new functions....
-    handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string, type: string) => void;
+    //handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string, type: string) => void;
     handleTodoDelete: (listId: string, todoId: string) => void;
     handleTodoComplete: (listId: string, todoId: string) => void;
     handleTitleSet: (title: string) => void;
@@ -54,4 +57,9 @@ export interface individualListInterface{
 
 export interface userListsInterface {
     lists: individualListInterface[];
+}
+
+export interface headerInterface {
+    title: string,
+    handleTitleSet:(newTitle: string) => void
 }

@@ -1,20 +1,15 @@
 import * as React from 'react'
+import {headerInterface} from './../interfaces'
 
-const Header = (props: any) => {
-
-    const [title, setTitle] = React.useState(props.title);
-
-    function handleTitleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        setTitle(event.target.value)
-    }
+const Header = (props: headerInterface) => {
 
     function handleTitleUpdate(event: React.KeyboardEvent) {
-        let newTitle;
         if (event.key === "Enter") {
-            newTitle = title;
+            console.log("enter!");
+            //setTitle(title);
         }
-
-        props.handleTitleSet(newTitle);
+        
+        //props.handleTitleSet(title);
 
     }
 
@@ -22,10 +17,10 @@ const Header = (props: any) => {
         <div className="list-title">
             <input
                 type="text"
-                value={title}
+                value={props.title}
                 placeholder="Enter title...."
-                onChange={event => {handleTitleChange(event)}}
-                onKeyPress={event => {handleTitleUpdate(event)}}
+                onChange={event => {props.handleTitleSet(event.target.value)}}
+                onKeyPress={event => {handleTitleUpdate(event)}} //create function with database
             />
         </div>
     )
