@@ -1,14 +1,11 @@
 //------TODO-------------
 
 //------FRONTEND CHANGES-------
-//Time also needs to be updated!
 //input fields can't be empty!
 //Real time update?
-//Checkout routing -- ?
 //Work on material ui time picker
 
 //---------BACKEND CHANGES-------
-//Title, task, date update
 
 //---------EXTRA FEATURES--------
 //Add labels too...
@@ -159,6 +156,15 @@ const App = () => {
     setUser("");
   }
 
+  function closeForm() {
+    setTodos([]);
+    setTitle("");
+    let formEle = document.getElementById("displayForm");
+    if(formEle){
+      formEle.style.display = "none";
+    }
+  }
+
   async function addListToDatabase() {
     //Add the list to the database, alert the user and show the lists
     //Add title and id before adding to the database and the userid or email
@@ -218,15 +224,12 @@ const App = () => {
         <UserLists
           useremail={user}
           listNames={lists}
-          handleTodoCreate={handleTodoCreate}
-          handleTodoComplete={handleTodoComplete}
-          handleTodoDelete={handleTodoDelete}
-          //handleTodoUpdate={handleTodoUpdate}
           handleTitleSet={handleTitleSet}
         />
       </div>
       
       <div id="displayForm">
+          <button className="close-btn" onClick={closeForm}>X</button>
           <TodoForm
             title={title}
             id={shortid.generate()}
@@ -236,7 +239,6 @@ const App = () => {
             handleTodoCreate={handleTodoCreate}
             handleTodoComplete={handleTodoComplete}
             handleTodoDelete={handleTodoDelete}
-            //handleTodoUpdate={handleTodoUpdate}
             handleTitleSet={handleTitleSet}
           />
           <br></br>

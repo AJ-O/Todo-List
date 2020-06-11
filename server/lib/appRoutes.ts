@@ -31,7 +31,9 @@ export class Routes {
         app.route("/updateTask/:useremail").post(this.Controller.updateTask);
 
         app.route("/updateTime/:useremail").post(this.Controller.updateTime);
-        //To implement!
-        // app.route("/deleteList").delete()
+
+        app.route("/updateTitle/:useremail").post(this.Controller.updateTitle);
+        
+        app.route("/deleteTodoList/:useremail/:listId").delete(this.Controller.deleteTodoList);
     }
 }

@@ -22,6 +22,10 @@ li {
   background: linear-gradient(90deg, rgba(67, 142, 255, 0.87577) 25%, rgba(66, 211, 255, 0.892577) 56%);
 }
 
+#displayForm .close-btn {
+  float: right;
+}
+
 #displayForm ul {
   padding: 0px;
 }
@@ -202,7 +206,7 @@ li {
   margin-left: 30%;
 }
 
-.edit-btn {
+.close-btn {
   background-color: rgba(18, 255, 196, 0.685);
 }
 /*# sourceMappingURL=style.css.map */

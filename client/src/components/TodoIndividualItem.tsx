@@ -8,14 +8,13 @@ import {TodoCreateIndividualItemInterface, TodoIndividualItemInterface} from './
 
 const TodoIndividualItem = (props: TodoCreateIndividualItemInterface) => {
     
-    const [timeState, setTime] = React.useState(Date)
-    //const [newTimeState, setNewTimeState] = React.useState()
-    const [formState, setFormState] = React.useState("")
-    const inputTaskRef = React.useRef<HTMLInputElement>(null)
-    const inputDateRef = React.useRef<HTMLInputElement>(null)
+    const [timeState, setTime] = React.useState(Date);
+    const [taskState, setTaskState] = React.useState("");
+    const inputTaskRef = React.useRef<HTMLInputElement>(null);
+    const inputDateRef = React.useRef<HTMLInputElement>(null);
 
     function handleInputChangeTask(event: React.ChangeEvent<HTMLInputElement>){
-        setFormState(event.target.value)
+        setTaskState(event.target.value)
     }
 
     function handleInputChangeDate(event: React.ChangeEvent<HTMLInputElement>) {
@@ -25,16 +24,28 @@ const TodoIndividualItem = (props: TodoCreateIndividualItemInterface) => {
     function handleData() {
         const newTodoItem: TodoIndividualItemInterface = {
             id: shortid.generate(),
-            task: formState,
+            task: taskState,
             isCompleted: false,
             setTime: timeState
         }
 
         if(props.todo.length === 0){
-            props.handleTodoCreate(newTodoItem)
+
+            if(inputTaskRef.current?.value === "") {
+                alert("Kindly enter a task before adding!");
+            } else {
+                props.handleTodoCreate(newTodoItem);
+            }
+
         } else {
-            props.handleTodoCreate(newTodoItem, props.todo, props.id);
+
+            if(taskState === "") {
+                alert("Kindly enter a task before adding!");
+            } else {
+                props.handleTodoCreate(newTodoItem, props.id);
+            }
         }
+
         if(inputTaskRef && inputTaskRef.current) {
             inputTaskRef.current.value = ""
         }

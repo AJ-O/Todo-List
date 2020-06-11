@@ -24,8 +24,7 @@ const UserList = (props: individualListInterface) => {
     // }, [todos]);
 
 //create another handletodocreate with values of todos
-    async function handleTodoCreate(todo: TodoIndividualItemInterface, id? : String) {
-        //add to the list using post then get only that list again...
+    async function handleTodoCreate(todo: TodoIndividualItemInterface, listId? : String) {
 
         let options = {
             method: "POST",
@@ -35,7 +34,9 @@ const UserList = (props: individualListInterface) => {
             body: JSON.stringify(todo)
         };
 
-        const response = await fetch(`/addTodo/${props.useremail}/${id}`, options)
+        console.log(listId);
+
+        const response = await fetch(`/addTodo/${props.useremail}/${listId}`, options)
         const json = await response.json();
 
         if(json.code !== 200) {
@@ -78,16 +79,6 @@ const UserList = (props: individualListInterface) => {
         }
     }
 
-    //Change element text in real time
-    function handleTodoUpdate(event: any, listId: string) {
-        let editBtn = document.getElementById(listId);
-        if(editBtn?.textContent === "Edit") {
-            editBtn.textContent = "Update Changes";
-        } else if(editBtn){
-            editBtn.textContent = "Edit";
-        }
-    }
-
     async function updateValueInDatabase(event: any, listId: string, todoId: string, type: string) {
         if(event.key === "Enter") {
             
@@ -117,32 +108,57 @@ const UserList = (props: individualListInterface) => {
                 console.log(event.target.value, type);
                 data["value"] = event.target.value;
                 options["body"] = JSON.stringify(data);
-
-                const response = await fetch(`updateTime/${props.useremail}`, options);
+                const response = await fetch(`/updateTime/${props.useremail}`, options);
                 const json = await response.json();
             }
         }
     }
 
-    function handleTitleSet() {
+    async function handleTitleSet(updatedTitle: string, listId?: string) {
 
+        const data = {
+            listId: listId,
+            value: updatedTitle
+        };
+        console.log(data);
+
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(data)
+        };
+
+        console.log(options);
+        const response = await fetch(`/updateTitle/${props.useremail}`, options);
+        const json = await response.json();
+    }
+
+    async function deleteTodoList(listId: string) {
+
+        const options = {
+            method: "DELETE",
+        }
+
+        const response = await fetch(`/deleteTodoList/${props.useremail}/${listId}`, options);
+        const json = await response.json();
     }
 
     return(
             <ul className="unordered-list-items">
-                {props.listNames.map((list: TodoFormInterface, index: number) => (
+                {props.listNames.map((list: TodoFormInterface) => (
                     <li key={list.id} className="ind-list">
-                        <button className="edit-btn" id={list.id} onClick={(event) => {handleTodoUpdate(event, list.id)}}>Edit</button>
+                        <button className="close-btn" onClick={() => deleteTodoList(list.id)}>Delete</button>
                         <TodoForm
                             id={list.id}
                             title={list.title}
-                            todos={list.todos} //need to give state variable, state variable need to initalised with list.todos
+                            todos={list.todos}
                             createTask={todos}
                             listType={"dbList"}
                             handleTodoCreate={handleTodoCreate}
                             handleTodoComplete={handleTodoComplete}
                             handleTodoDelete={handleTodoDelete}
-                            //handleTodoUpdate={handleTodoUpdate}
                             handleTitleSet={handleTitleSet}
                             updateValueInDatabase={updateValueInDatabase}
                         />

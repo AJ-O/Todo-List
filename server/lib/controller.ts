@@ -26,76 +26,7 @@ export class Controller{
             });
         }
     }
-
-    public testmethod(req: Request, res: Response) {
-        let db = App.db;
-        
-        let todoList1 = {
-            title: "testTitle",
-
-            todoItems: [
-                {
-                    isCompeleted: false,
-                    task: "task1",
-                    id: "001",
-                    setTime: "09:09:12"
-                },
-                {
-                    isCompeleted: false,
-                    task: "task2",
-                    id: "002",
-                    setTime: "09:09:12"
-                },
-                {
-                    isCompeleted: false,
-                    task: "task3",
-                    id: "003",
-                    setTime: "09:09:12"
-                }
-            ]
-        }
-
-        let todoList2 = {
-            title: "testTitle2",
-
-            todoItems: [
-                {
-                    isCompeleted: false,
-                    task: "task11",
-                    id: "004",
-                    setTime: "19:09:12"
-                },
-                {
-                    isCompeleted: false,
-                    task: "task12",
-                    id: "005",
-                    setTime: "19:09:12"
-                },
-                {
-                    isCompeleted: false,
-                    task: "task13",
-                    id: "006",
-                    setTime: "19:09:12"
-                }
-            ],
-        }
-        let todos = [todoList1, todoList2]
-
-        let testObj = {
-            useremail: "abc@gmail.com",
-            TodoLists: todos
-        }
-
-        let lm = new listModel(testObj);
-        lm.save((err, data) => {
-            if(err) {
-                console.log(err)
-            } else {
-                res.send(data);
-            }
-        });
-    }
-
+    
     public getRecords(req: Request, res: Response) {
         console.log("called get");
 
@@ -199,15 +130,6 @@ export class Controller{
                 })
             }
         });
-
-        //deletes the whole list
-        // listModel.findOneAndUpdate({useremail: useremail}, {$pull: {TodoLists: {todos: {$elemMatch: {id: deleteTodoId}}}}}, (err, data) => {
-        //     if(err) {
-        //         console.log(err);
-        //     } else {
-        //         console.log("data: ", data["TodoLists"]);
-        //     }
-        // })
     }
 
     public modifyTodoStatus(req: Request, res: Response) {
@@ -236,12 +158,63 @@ export class Controller{
     public updateTime(req: Request, res: Response) {
         
         const useremail = req.params.useremail;
-        console.log(useremail, req.body);
+        const listId = req.body.listId;
+        const todoId = req.body.todoId;
+        const updatedTime = req.body.value;
+        
+        listModel.findOneAndUpdate({useremail: useremail, "TodoLists.id": listId},{$set: {"TodoLists.$.todos.$[id].setTime": updatedTime}}, {arrayFilters: [{"id.id": todoId}]}, (err, data) => {
+            if(err) {
+                console.log(err);
+            } else {
+                console.log("updatedtime!");
+            }
+        });
     }
 
     public updateTask(req: Request, res: Response) {
         
         const useremail = req.params.useremail;
-        console.log(useremail, req.body);
+        const listId = req.body.listId;
+        const todoId = req.body.todoId;
+        const updatedTask = req.body.value;
+
+        listModel.findOneAndUpdate({useremail: useremail, "TodoLists.id": listId}, {$set: {"TodoLists.$.todos.$[id].task": updatedTask}}, {arrayFilters: [{"id.id": todoId}]}, (err, data) => {
+            if(err) {
+                console.log(err);
+            } else {
+                console.log("updatedtask!");
+            }
+        });
+    }
+
+    public updateTitle(req: Request, res: Response) {
+
+        const useremail = req.params.useremail;
+        console.log(req.body);
+        const listId = req.body.listId;
+        const updatedTitle = req.body.value;
+        console.log(useremail, listId, updatedTitle);
+
+        listModel.findOneAndUpdate({useremail: useremail, "TodoLists.id": listId}, {$set: {"TodoLists.$.title": updatedTitle}}, (err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("updated title!");
+            }
+        })
+    }
+
+    public deleteTodoList(req: Request, res: Response) {
+
+        const useremail = req.params.useremail;
+        const listId = req.params.listId;
+
+        listModel.findOneAndUpdate({useremail: useremail}, {$pull: {TodoLists: {id: listId}}}, (err, data) => {
+            if(err) {
+                console.log(err);
+            } else {
+                console.log("data: ", data["TodoLists"]);
+            }
+        })
     }
 }

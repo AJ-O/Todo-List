@@ -8,6 +8,7 @@ const Header = (props: headerInterface) => {
     function handleTitleUpdate(event: React.KeyboardEvent) {
         if (event.key === "Enter") {
             console.log("enter!");
+            props.handleTitleSet(listTitle, props.listId);
         }
     }
 

@@ -14,7 +14,6 @@ const TodoList = (props: TodoItemsInterface) => {
                             todo={todo}
                             handleTodoComplete={props.handleTodoComplete}
                             handleTodoDelete={props.handleTodoDelete}
-                            //handleTodoUpdate={props.handleTodoUpdate}
                             updateValueInDatabase={props.updateValueInDatabase}
                         />
                     </li>
