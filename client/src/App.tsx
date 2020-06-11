@@ -232,6 +232,7 @@ const App = () => {
             id={shortid.generate()}
             todos={todos}
             createTask={todos}
+            listType={"newList"}
             handleTodoCreate={handleTodoCreate}
             handleTodoComplete={handleTodoComplete}
             handleTodoDelete={handleTodoDelete}

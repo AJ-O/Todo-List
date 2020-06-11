@@ -5,8 +5,6 @@ import {individualListInterface, TodoFormInterface, TodoIndividualItemInterface,
 const UserList = (props: individualListInterface) => {
 
     const [todos, setTodos] = React.useState<TodoIndividualItemInterface[]>([]); 
-
-
 //TRY using usestate...
 
     // React.useEffect(() => {
@@ -90,13 +88,38 @@ const UserList = (props: individualListInterface) => {
         }
     }
 
-    function updateValueInDatabase(event: any, listId: string, todoId: string, type: string) {
+    async function updateValueInDatabase(event: any, listId: string, todoId: string, type: string) {
         if(event.key === "Enter") {
-            //console.log(event.target.value);
+            
+            let data = {
+                listId: listId,
+                todoId: todoId,
+                value: ""
+            }
+
+            let options = {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: ""
+            }
+            
             if(type === "task") {
                 console.log(event.target.value, type);
+                data["value"] = event.target.value;
+                options["body"] = JSON.stringify(data);
+
+                const response = await fetch(`/updateTask/${props.useremail}`, options);
+                const json = await response.json();
+
             } else {
                 console.log(event.target.value, type);
+                data["value"] = event.target.value;
+                options["body"] = JSON.stringify(data);
+
+                const response = await fetch(`updateTime/${props.useremail}`, options);
+                const json = await response.json();
             }
         }
     }
@@ -115,11 +138,12 @@ const UserList = (props: individualListInterface) => {
                             title={list.title}
                             todos={list.todos} //need to give state variable, state variable need to initalised with list.todos
                             createTask={todos}
+                            listType={"dbList"}
                             handleTodoCreate={handleTodoCreate}
                             handleTodoComplete={handleTodoComplete}
                             handleTodoDelete={handleTodoDelete}
                             //handleTodoUpdate={handleTodoUpdate}
-                            handleTitleSet={props.handleTitleSet}
+                            handleTitleSet={handleTitleSet}
                             updateValueInDatabase={updateValueInDatabase}
                         />
                     </li>

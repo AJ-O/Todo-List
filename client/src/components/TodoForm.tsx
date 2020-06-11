@@ -11,6 +11,7 @@ const TodoForm = (props: TodoFormInterface) => {
         <div>
             <Header 
                 title={props.title} //Add update and delete method to list
+                listType={props.listType}
                 handleTitleSet={props.handleTitleSet}
             />
             <TodoList

@@ -18,6 +18,7 @@ export interface TodoFormInterface {
     id: string,
     todos: TodoIndividualItemInterface[],
     createTask: TodoIndividualItemInterface[],
+    listType: string,
     //handleTodoUpdate: (event: React.ChangeEvent<HTMLInputElement>, id: string, type: string) => void;
     handleTodoDelete: (listId: string, todoId: string) => void;
     handleTodoComplete: (listId: string, todoId: string) => void;
@@ -61,5 +62,6 @@ export interface userListsInterface {
 
 export interface headerInterface {
     title: string,
+    listType: string,
     handleTitleSet:(newTitle: string) => void
 }

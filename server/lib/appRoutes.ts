@@ -27,11 +27,11 @@ export class Routes {
         app.route("/deleteTodoItem/:useremail/:listId/:todoId").delete(this.Controller.deleteTodoItem);
 
         app.route("/completeTodo/:useremail").post(this.Controller.modifyTodoStatus);
+
+        app.route("/updateTask/:useremail").post(this.Controller.updateTask);
+
+        app.route("/updateTime/:useremail").post(this.Controller.updateTime);
         //To implement!
-        // app.route("/updateTask").post() 
-
-        // app.route("/getIndividualList").get()
-
         // app.route("/deleteList").delete()
     }
 }

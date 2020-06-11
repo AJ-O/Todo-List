@@ -232,4 +232,16 @@ export class Controller{
         })
 
     }
+
+    public updateTime(req: Request, res: Response) {
+        
+        const useremail = req.params.useremail;
+        console.log(useremail, req.body);
+    }
+
+    public updateTask(req: Request, res: Response) {
+        
+        const useremail = req.params.useremail;
+        console.log(useremail, req.body);
+    }
 }

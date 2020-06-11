@@ -1,3 +1,5 @@
 node_modules
 .env
 package-lock.json
+style/style.css
+style/style.css.map
