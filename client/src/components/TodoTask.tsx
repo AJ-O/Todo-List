@@ -23,8 +23,6 @@ const TodoTask = (props: TodoItemTaskInterface) => {
 
             <div className="user-task">
                 <input
-                    // value={props.todo.task}
-                    // onChange={(event:React.ChangeEvent<HTMLInputElement>) => props.handleTodoUpdate(event, props.todo.id, "task")}
                     value={task}
                     onChange={(event:React.ChangeEvent<HTMLInputElement>) => setTask(event.target.value)}
                     onKeyPress={(event: React.KeyboardEvent) => props.updateValueInDatabase? props.updateValueInDatabase(event, props.id, props.todo.id, "task"): ""} 

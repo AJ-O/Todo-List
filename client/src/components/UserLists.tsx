@@ -1,29 +1,12 @@
 import React from 'react'
 import TodoForm from './TodoForm'
-import {individualListInterface, TodoFormInterface, TodoIndividualItemInterface, TodoItemsInterface} from './../interfaces'
+import {individualListInterface, TodoFormInterface, TodoIndividualItemInterface} from './../interfaces'
 
 const UserList = (props: individualListInterface) => {
 
     const [todos, setTodos] = React.useState<TodoIndividualItemInterface[]>([]); 
-//TRY using usestate...
+    const [todoLists, setTodoLists] = React.useState(props.lists);
 
-    // React.useEffect(() => {
-    //     const options = {
-    //         method: "GET",
-    //         headers: {
-    //             "Content-type": "application/json"
-    //         }
-    //     }
-
-    //     const getDetails = async () => {
-    //         const response = await fetch(`/getLists/${props.useremail}`, options)
-    //         const json = await response.json();
-    //         setTodos(json["data"][0]["TodoLists"]);
-    //     }
-    //     getDetails();
-    // }, [todos]);
-
-//create another handletodocreate with values of todos
     async function handleTodoCreate(todo: TodoIndividualItemInterface, listId? : String) {
 
         let options = {
@@ -34,18 +17,14 @@ const UserList = (props: individualListInterface) => {
             body: JSON.stringify(todo)
         };
 
-        console.log(listId);
-
         const response = await fetch(`/addTodo/${props.useremail}/${listId}`, options)
         const json = await response.json();
+        console.log(json);
 
         if(json.code !== 200) {
-            console.error(json.message);
+            console.log(json.err);
         } else {
-            const response = await fetch(`/getLists/${props.useremail}`)
-            const json = await response.json();
-            console.log(json);
-            //setTodos(json["data"][0]["TodoLists"]); //to update state, either, reload or use state...
+            setTodoLists(json["data"]["TodoLists"]);
         }
     }
 
@@ -63,6 +42,11 @@ const UserList = (props: individualListInterface) => {
         const json = await response.json();
         console.log(json);
 
+        if(json.code !== 200) {
+            console.log(json.err);
+        } else {
+            setTodoLists(json["data"]["TodoLists"]);
+        }
     }
 
     async function handleTodoDelete(listId?: String, todoId? : String) {
@@ -72,10 +56,12 @@ const UserList = (props: individualListInterface) => {
 
         const response = await fetch(`/deleteTodoItem/${props.useremail}/${listId}/${todoId}`, options);
         const json = await response.json();
-        if(json.code === 200) {
-            const response = await fetch(`/getLists/${props.useremail}`)
-            const json = await response.json();
-            console.log(json);
+        console.log(json);
+
+        if(json.code !== 200) {
+            console.log(json.err);
+        } else {
+            setTodoLists(json["data"]["TodoLists"]);
         }
     }
 
@@ -103,6 +89,13 @@ const UserList = (props: individualListInterface) => {
 
                 const response = await fetch(`/updateTask/${props.useremail}`, options);
                 const json = await response.json();
+                console.log(json);
+
+                if(json.code !== 200) {
+                   console.log(json.err);
+                } else {
+                    setTodoLists(json["data"]["TodoLists"]);
+                }
 
             } else {
                 console.log(event.target.value, type);
@@ -110,6 +103,13 @@ const UserList = (props: individualListInterface) => {
                 options["body"] = JSON.stringify(data);
                 const response = await fetch(`/updateTime/${props.useremail}`, options);
                 const json = await response.json();
+                console.log(json);
+
+                if(json.code !== 200) {
+                    console.log(json.err);
+                } else {
+                    setTodoLists(json["data"]["TodoLists"]);
+                }
             }
         }
     }
@@ -133,6 +133,13 @@ const UserList = (props: individualListInterface) => {
         console.log(options);
         const response = await fetch(`/updateTitle/${props.useremail}`, options);
         const json = await response.json();
+        console.log(json);
+
+        if(json.code !== 200) {
+            console.log(json.err);
+        } else {
+            setTodoLists(json["data"]["TodoLists"]);
+        }
     }
 
     async function deleteTodoList(listId: string) {
@@ -143,11 +150,18 @@ const UserList = (props: individualListInterface) => {
 
         const response = await fetch(`/deleteTodoList/${props.useremail}/${listId}`, options);
         const json = await response.json();
+        console.log(json);
+
+        if(json.code !== 200) {
+            console.log(json.err);
+        } else {
+            setTodoLists(json["data"]["TodoLists"]);
+        }
     }
 
     return(
             <ul className="unordered-list-items">
-                {props.listNames.map((list: TodoFormInterface) => (
+                {todoLists.map((list: TodoFormInterface) => (
                     <li key={list.id} className="ind-list">
                         <button className="close-btn" onClick={() => deleteTodoList(list.id)}>Delete</button>
                         <TodoForm

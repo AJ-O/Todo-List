@@ -1,10 +1,9 @@
 import App from './app'
 import mongoose from 'mongoose'
-import {UserLists, TodoList} from './models'
+import {UserLists} from './models'
 import {Request, Response} from 'express'
 
 const listModel = mongoose.model('list', UserLists);
-const todoModel = mongoose.model('todos', TodoList);
 
 export class Controller{
 
@@ -17,41 +16,53 @@ export class Controller{
         
         let useremail = req.params.useremail;
         console.log(useremail);
-        listModel.findOneAndUpdate({useremail: useremail}, {$push: {TodoLists: req.body}}, done) //operator to push to object
-        function done() {
+        listModel.findOneAndUpdate({useremail: useremail}, {$push: {TodoLists: req.body}}, (err, data) => {
             console.log("done")
-            res.send({
-                status: "success",
-                code: 200
-            });
-        }
+
+            if(err) {
+                res.send({
+                    code: 400,
+                    err: err,
+                    status: "error"
+                })
+            }
+            else {
+                res.send({
+                    code: 200,
+                    data: data[0],
+                    status: "success"
+                });
+            }
+        });
     }
     
     public getRecords(req: Request, res: Response) {
-        console.log("called get");
 
-        let useremail: string = req.params.useremail;
-        useremail = useremail.replace(":", "");
+        const useremail: string = req.params.useremail;
         console.log("useremail: ", useremail);
 
         listModel.find({useremail: useremail}, (err, data) => {
+            console.log("called get all");
             if(err){
-                res.send(err);
-                console.log(err);
+                res.send({
+                    code: 400,
+                    err: err,
+                    status: "error"
+                });
             } else{
-                let resObj = {
-                    status: "success",
-                    data: data
-                }
-                res.send(resObj);
-                console.log("called get all");
+                res.send({
+                    code: 200,
+                    data: data[0],
+                    status: "success"
+                });
             }
         })
     }
 
     public userDetails(req: Request, res: Response) {
 
-        let useremail = req.body.useremail;
+        const useremail = req.body.useremail;
+
         listModel.find({useremail: useremail}, (err, data) => {
             let retObj = {};
             if (err) {
@@ -82,52 +93,56 @@ export class Controller{
                     res.send(retObj);
                 }
             }
-            //console.log(retObj);
         });
     }
 
     public addTodo(req: Request, res: Response) {
-        //console.log(req.body, req.params);
-        let useremail = req.params.useremail;
-        let todoListId = req.params.id;
-        let todo = req.body;
+
+        const useremail = req.params.useremail;
+        const todoListId = req.params.id;
+        const todo = req.body;
         console.log(useremail, todoListId, todo);
         listModel.findOneAndUpdate({useremail: useremail, "TodoLists.id": todoListId}, {$push: {"TodoLists.$.todos": todo}}, (err, data) => {
             if(err) {
                 res.send({
-                    status: "error",
-                    code: 400
+                    code: 400,
+                    err: err,
+                    status: "error"
                 });
-                console.log(err);
             } else {
-                console.log("done");
-                res.send({
-                    status: "success",
-                    code: 200,
-                    data: data
+                listModel.find({useremail: useremail}, (err, data) => {
+                    res.send({
+                        code: 200,
+                        data: data[0],
+                        status: "success"
+                    })
                 })
             }
         });
     }
 
     public deleteTodoItem(req: Request, res: Response) {
-        let useremail = req.params.useremail;
-        let deleteTodoId = req.params.todoId;
-        let todoListId = req.params.listId;
+        const useremail = req.params.useremail;
+        const deleteTodoId = req.params.todoId;
+        const todoListId = req.params.listId;
 
         listModel.findOneAndUpdate({useremail: useremail, "TodoLists.id": todoListId}, {$pull: {"TodoLists.$.todos": {id: deleteTodoId}}}, (err, data) => {
             if(err) {
                 console.log(err);
                 res.send({
-                    message: err,
-                    code: 400
+                    code: 400,
+                    err: err,
+                    status: "error"
                 })
             } else {
-                console.log("data: ", data["TodoLists"]);
-                res.send({
-                    message: "success",
-                    code: 200
-                })
+                console.log("item deleted");
+                listModel.find({useremail: useremail}, (err, data) => {
+                    res.send({
+                        code: 200,
+                        data: data[0],
+                        status: "success"
+                    })
+                });
             }
         });
     }
@@ -138,18 +153,24 @@ export class Controller{
         const listId = req.body.listId;
         const todoId = req.body.todoId;
         console.log(useremail, listId, todoId);
+
         listModel.findOneAndUpdate({useremail: useremail, "TodoLists.id": listId}, {$set: {"TodoLists.$.todos.$[id].isCompleted": true}}, {arrayFilters: [{"id.id": todoId}]}, (err, data) => {
             if(err) {
                 res.send({
                     code: 400,
-                    err: err
+                    err: err,
+                    status: "error"
                 });
             } else {
                 console.log("done");
-                res.send({
-                    code: 200,
-                    message: "success"
-                });
+                
+                listModel.find({useremail: useremail}, (err, data) => {
+                    res.send({
+                        code: 200,
+                        data: data[0],
+                        status: "success"
+                    });
+                })
             }
         })
 
@@ -165,8 +186,18 @@ export class Controller{
         listModel.findOneAndUpdate({useremail: useremail, "TodoLists.id": listId},{$set: {"TodoLists.$.todos.$[id].setTime": updatedTime}}, {arrayFilters: [{"id.id": todoId}]}, (err, data) => {
             if(err) {
                 console.log(err);
+                res.send({
+                    code: 400,
+                    err: err,
+                    status: "error"
+                })
             } else {
                 console.log("updatedtime!");
+                res.send({
+                    code: 200,
+                    data: data,
+                    status: "success"
+                });
             }
         });
     }
@@ -181,8 +212,18 @@ export class Controller{
         listModel.findOneAndUpdate({useremail: useremail, "TodoLists.id": listId}, {$set: {"TodoLists.$.todos.$[id].task": updatedTask}}, {arrayFilters: [{"id.id": todoId}]}, (err, data) => {
             if(err) {
                 console.log(err);
+                res.send({
+                    code: 400,
+                    err: err,
+                    status: "error"
+                })
             } else {
                 console.log("updatedtask!");
+                res.send({
+                    code: 200,
+                    data: data,
+                    status: "success"
+                });
             }
         });
     }
@@ -190,7 +231,6 @@ export class Controller{
     public updateTitle(req: Request, res: Response) {
 
         const useremail = req.params.useremail;
-        console.log(req.body);
         const listId = req.body.listId;
         const updatedTitle = req.body.value;
         console.log(useremail, listId, updatedTitle);
@@ -198,8 +238,19 @@ export class Controller{
         listModel.findOneAndUpdate({useremail: useremail, "TodoLists.id": listId}, {$set: {"TodoLists.$.title": updatedTitle}}, (err, data) => {
             if (err) {
                 console.log(err);
+                res.send({
+                    code: 400,
+                    err: err,
+                    status: "error"
+                })
+
             } else {
                 console.log("updated title!");
+                res.send({
+                    code: 200,
+                    data: data,
+                    status: "success"
+                });
             }
         })
     }
@@ -212,8 +263,21 @@ export class Controller{
         listModel.findOneAndUpdate({useremail: useremail}, {$pull: {TodoLists: {id: listId}}}, (err, data) => {
             if(err) {
                 console.log(err);
+                res.send({
+                    code: 400,
+                    err: err,
+                    status: "error"
+                })
             } else {
-                console.log("data: ", data["TodoLists"]);
+                console.log("list deleted!");
+                
+                listModel.find({useremail: useremail}, (err, data) => {
+                    res.send({
+                        code: 200,
+                        data: data[0],
+                        status: "success"
+                    });
+                })
             }
         })
     }

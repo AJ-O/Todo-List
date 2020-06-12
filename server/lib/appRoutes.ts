@@ -13,14 +13,11 @@ export class Routes {
             })
         });
 
-        //Test
         app.route("/createList/:useremail").post(this.Controller.createList);
 
         app.route("/userdetails").post(this.Controller.userDetails);
 
         app.route("/getLists/:useremail").get(this.Controller.getRecords);
-        
-        app.route("/testmethod").get(this.Controller.testmethod);
         
         app.route("/addTodo/:useremail/:id").post(this.Controller.addTodo);
         

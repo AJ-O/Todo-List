@@ -43,7 +43,7 @@ export interface TodoItemsInterface {
 }
 
 export interface individualListInterface{
-    listNames: TodoFormInterface[];
+    lists: TodoFormInterface[];
     useremail: String;
     handleTitleSet: (title: string) => void;
 }

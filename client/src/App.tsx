@@ -2,7 +2,6 @@
 
 //------FRONTEND CHANGES-------
 //input fields can't be empty!
-//Real time update?
 //Work on material ui time picker
 
 //---------BACKEND CHANGES-------
@@ -28,40 +27,13 @@ dotenv.config()
 
 const App = () => {
 
-  const [todos, setTodos] = React.useState<TodoIndividualItemInterface[]>([]);
-  const [title, setTitle] = React.useState("");
-  const [lists, setLists] = React.useState<TodoFormInterface[]>([]);
-  const [user, setUser] = React.useState("")
   const clientId = process.env.REACT_APP_CLIENT_ID
 
-//   React.useEffect(() =>  {
+  const [title, setTitle] = React.useState("");
+  const [user, setUser] = React.useState("")
 
-//     const options = {
-//         method: "GET",
-//         headers: {
-//             "Content-type": "application/json"
-//         }
-//     };
-    
-//     const a = async () => {
-//       const data = await fetch("/getLists", options);
-//       const res = await data.json();
-//       if(res.status === "success") {
-//         //Display all the lists -- with title
-//         console.log(res.data);
-//         let tasks = []
-//         let data = res.data;
-//         //console.log(data[0].userid.TodoLists.list1);
-//         let userLists = data[0].userid.TodoLists;
-//         tasks = userLists.list1.todoItems;
-//         console.log(tasks);
-//         setTodos(tasks);
-//       } else {
-//         alert("Error fetching data!")
-//       }
-//     }
-//     a();
-// }, []) //2nd parameter because, whenever there is a change in the value of that array useffect will be called!
+  const [todos, setTodos] = React.useState<TodoIndividualItemInterface[]>([]);
+  const [lists, setLists] = React.useState<TodoFormInterface[]>([]);
 
   function showForm(){
     let ele = document.getElementById("displayForm");
@@ -78,21 +50,7 @@ const App = () => {
     setTodos(newTodoState);
   }
 
-  // function handleTodoUpdate(event: React.ChangeEvent<HTMLInputElement>, id: string, type: string) {
-  //   const newTodoState: TodoIndividualItemInterface[] = [...todos];
-  //   if(type === "time") {
-  //     newTodoState.find((todo: TodoIndividualItemInterface) => todo.id === id)!.setTime = event.target.value;
-  //   } else if(type === "task") {
-  //     newTodoState.find((todo: TodoIndividualItemInterface) => todo.id === id)!.task = event.target.value;
-  //   }
-  //   setTodos(newTodoState)
-  // }
-
   function handleTodoDelete(listId: string, todoId: string) {
-    console.log("delete called!", listId, todoId);
-    todos.forEach(todo => {
-      console.log(todo.id);
-    });
     const newTodoState: TodoIndividualItemInterface[] = todos.filter((todo: TodoIndividualItemInterface) => todo.id !== todoId)
     setTodos(newTodoState);
   }
@@ -134,12 +92,11 @@ const App = () => {
         }
       }
   
-      const data = await fetch(`/getLists/:${userEmail}`, getOptions);
+      const data = await fetch(`/getLists/${userEmail}`, getOptions);
       const res = await data.json();
       if(res.status === "success") {
-        console.log(res.data);
         let data = res.data;
-        let userLists = data[0].TodoLists;
+        let userLists = data["TodoLists"];
         console.log(userLists);
         setLists(userLists);
       } else {
@@ -149,7 +106,6 @@ const App = () => {
     } else {
       setUser(userEmail);
     }
-
   }
 
   function logoutSuccess() {
@@ -166,12 +122,13 @@ const App = () => {
   }
 
   async function addListToDatabase() {
-    //Add the list to the database, alert the user and show the lists
-    //Add title and id before adding to the database and the userid or email
-
+    
     if(title === ""){
       alert("Title is empty, kindly enter title");
+    } else if (todos.length === 0) {
+      alert("Kindly add a task before creating a list");
     } else {
+
       const dataObj = {
         todos: todos,
         title: title,
@@ -195,6 +152,7 @@ const App = () => {
           setTodos([]);
           ele.style.display = "none";
           alert("List created!");
+          window.location.reload();
         }
       } else {
         alert("Error occured!");
@@ -223,7 +181,7 @@ const App = () => {
       <div className="user-lists">
         <UserLists
           useremail={user}
-          listNames={lists}
+          lists={lists}
           handleTitleSet={handleTitleSet}
         />
       </div>
