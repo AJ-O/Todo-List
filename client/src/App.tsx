@@ -1,14 +1,5 @@
-//------TODO-------------
-
 //------FRONTEND CHANGES-------
-//input fields can't be empty!
 //Work on material ui time picker
-
-//---------BACKEND CHANGES-------
-
-//---------EXTRA FEATURES--------
-//Add labels too...
-
 
 import React from 'react';
 import './App.css';
@@ -38,9 +29,13 @@ const App = () => {
   function showForm(){
     let ele = document.getElementById("displayForm");
     if(ele) {
-      ele.style.display = "block";
+      ele.style.opacity = "1";
+      let lists = document.getElementById("user-lists");
+      if(lists){
+        lists.style.filter = "blur(10px)";
+        ele.style.zIndex = "1";
+      }
     }
-    console.log("called!");
   }
 
   function handleTodoCreate(todo: TodoIndividualItemInterface) {
@@ -117,7 +112,12 @@ const App = () => {
     setTitle("");
     let formEle = document.getElementById("displayForm");
     if(formEle){
-      formEle.style.display = "none";
+      formEle.style.opacity = "0";
+    }
+
+    let lists = document.getElementById("user-lists");
+    if(lists){
+      lists.style.filter = "none";
     }
   }
 
@@ -150,12 +150,16 @@ const App = () => {
         let ele = document.getElementById("displayForm");
         if(ele) {
           setTodos([]);
-          ele.style.display = "none";
+          ele.style.opacity = "0";
           alert("List created!");
           window.location.reload();
         }
       } else {
         alert("Error occured!");
+      }
+      let lists = document.getElementById("user-lists");
+      if(lists){
+        lists.style.filter = "blur(10px)";
       }
     }
   }
@@ -178,7 +182,7 @@ const App = () => {
         />
       </div>
 
-      <div className="user-lists">
+      <div id="user-lists">
         <UserLists
           useremail={user}
           lists={lists}
@@ -186,22 +190,24 @@ const App = () => {
         />
       </div>
       
-      <div id="displayForm">
-          <button className="close-btn" onClick={closeForm}>X</button>
-          <TodoForm
-            title={title}
-            id={shortid.generate()}
-            todos={todos}
-            createTask={todos}
-            listType={"newList"}
-            handleTodoCreate={handleTodoCreate}
-            handleTodoComplete={handleTodoComplete}
-            handleTodoDelete={handleTodoDelete}
-            handleTitleSet={handleTitleSet}
-          />
-          <br></br>
-          <button onClick={addListToDatabase}
-          className="finalise-list-btn">Finalize List</button>
+      <div id="create-form">
+        <div id="displayForm">
+            <button className="close-btn" onClick={closeForm}>X</button>
+            <TodoForm
+              title={title}
+              id={shortid.generate()}
+              todos={todos}
+              createTask={todos}
+              listType={"newList"}
+              handleTodoCreate={handleTodoCreate}
+              handleTodoComplete={handleTodoComplete}
+              handleTodoDelete={handleTodoDelete}
+              handleTitleSet={handleTitleSet}
+            />
+            <br></br>
+            <button onClick={addListToDatabase}
+            className="finalise-list-btn">Finalize List</button>
+        </div>
       </div>
     </div>
   ) : (

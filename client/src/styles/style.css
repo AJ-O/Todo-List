@@ -2,21 +2,22 @@ li {
   list-style-type: none;
 }
 
-#new-list-form {
-  display: none;
-}
-
-#formDisplay {
-  width: 70%;
+#create-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 #displayForm {
-  display: none;
-  float: right;
-  height: 70%;
-  width: 24rem;
-  margin-right: 5.5rem;
-  border-radius: 10%;
+  position: fixed;
+  opacity: 0;
+  border-radius: 3%;
   background: #438eff;
   background: -webkit-gradient(linear, left top, right top, color-stop(25%, rgba(67, 142, 255, 0.87577)), color-stop(56%, rgba(66, 211, 255, 0.892577)));
   background: linear-gradient(90deg, rgba(67, 142, 255, 0.87577) 25%, rgba(66, 211, 255, 0.892577) 56%);
@@ -24,6 +25,15 @@ li {
 
 #displayForm .close-btn {
   float: right;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 25%;
+  color: white;
+  background-color: #ff4b4b;
+}
+
+#displayForm .close-btn:hover {
+  background-color: red;
 }
 
 #displayForm ul {
@@ -33,7 +43,6 @@ li {
 .item-list {
   height: 100%;
   width: 40%;
-  background-color: 0;
 }
 
 .individual-item {
@@ -50,6 +59,7 @@ li {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
+  padding: 0.3rem;
 }
 
 .individual-item span {
@@ -65,19 +75,18 @@ li {
           align-items: center;
   border-radius: 50%;
   border: 1px solid black;
-  width: 4px;
-  height: 4px;
-  padding: 8px;
+  width: 0.25rem;
+  height: 0.25rem;
+  padding: 0.32rem;
   margin-right: 0.5em;
 }
 
 .todo-item-checked {
   color: greenyellow;
-  background: 0;
 }
 
 .todo-item-unchecked:hover {
-  background: black;
+  background: #8be4ff;
 }
 
 .item-remove {
@@ -118,7 +127,7 @@ li {
   background: #c5fbff;
   width: 2.4rem;
   height: 2.4rem;
-  font-size: 1.7rem;
+  cursor: pointer;
 }
 
 .list-title input {
@@ -149,6 +158,10 @@ li {
           flex-direction: row;
 }
 
+.input-form input {
+  margin-left: 0.5rem;
+}
+
 .google-login-btn {
   margin-left: 200px;
   margin-top: 200px;
@@ -161,14 +174,16 @@ li {
 
 .logout-btn {
   float: right;
-  margin-top: 2rem;
-  margin-right: 2rem;
+  margin-top: 1.2rem;
+  margin-right: 1.2rem;
 }
 
 .user-lists {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-filter: none;
+          filter: none;
 }
 
 .unordered-list-items {
@@ -203,7 +218,15 @@ li {
 }
 
 .finalise-list-btn {
-  margin-left: 30%;
+  margin-left: 35%;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-style: italic;
+  font-size: 0.98rem;
+  font-weight: bolder;
+  border-radius: 15%;
+  background: rgba(52, 65, 245, 0.932);
+  background: -webkit-gradient(linear, left top, right top, color-stop(32%, #7fd0ff), color-stop(79%, #3916ff));
+  background: linear-gradient(90deg, #7fd0ff 32%, #3916ff 79%);
 }
 
 .close-btn {

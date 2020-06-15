@@ -2,27 +2,31 @@ li {
     list-style-type: none;
 }
 
-#new-list-form{
-    display: none
-}
-
-#formDisplay{
-    width: 70%;
+#create-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #displayForm {
-    display: none;
-    float: right;
-    height: 70%;
-    width: 24rem;
-    margin-right: 5.5rem;
-    border-radius: 10%;
+    position: fixed;
+    opacity: 0;
+    border-radius: 3%;
     background: rgb(67,142,255);
     background: linear-gradient(90deg, rgba(67,142,255,0.875770376509979) 25%, rgba(66,211,255,0.8925770991990546) 56%);
 }
 
 #displayForm .close-btn{
     float: right;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border-radius: 25%;
+    color: white;
+    background-color: rgb(255, 75, 75);
+}
+
+#displayForm .close-btn:hover{
+    background-color: rgb(255, 0, 0);
 }
 
 #displayForm ul {
@@ -33,7 +37,6 @@ li {
 .item-list{
     height: 100%;
     width: 40%;
-    background-color: red($color: #000000);
 }
 
 .individual-item {
@@ -41,6 +44,7 @@ li {
     flex-flow: row nowrap;
     align-items: center;
     flex-grow: 1;
+    padding: 0.3rem;
 }
 
 .individual-item span {
@@ -49,19 +53,19 @@ li {
     align-items: center;
     border-radius: 50%;
     border: 1px solid black;
-    width: 4px;
-    height: 4px;
-    padding: 8px;
+    width: 0.25rem;
+    height: 0.25rem;
+    padding: 0.32rem;
     margin-right: 0.5em;
 }
 
 .todo-item-checked {
     color: greenyellow;
-    background: green($color: #000000);
 }
 
 .todo-item-unchecked:hover{
-    background: black;
+    background:#8be4ff;
+    ;
 }
 
 .item-remove {
@@ -101,7 +105,7 @@ li {
     background: rgb(197, 251, 255);
     width:2.4rem;
     height:2.4rem;
-    font-size: 1.7rem;
+    cursor: pointer;
 }
 
 .list-title input{
@@ -124,6 +128,10 @@ li {
     flex-direction: row;
 }
 
+.input-form input {
+    margin-left: 0.5rem;
+}
+
 .google-login-btn {
     margin-left: 200px;
     margin-top: 200px;
@@ -135,12 +143,13 @@ li {
 
 .logout-btn {
     float: right;
-    margin-top: 2rem;
-    margin-right: 2rem;
+    margin-top: 1.2rem;
+    margin-right: 1.2rem;
 }
 
 .user-lists {
     display: flex;
+    filter: none;
 }
 
 .unordered-list-items {
@@ -163,8 +172,16 @@ li {
     cursor: pointer;
     transition-duration: 0.1s;
 }
+
 .finalise-list-btn{
-    margin-left: 30%;
+    margin-left: 35%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-style: italic;
+    font-size: 0.98rem;
+    font-weight: bolder;
+    border-radius: 15%;
+    background: rgba(52, 65, 245, 0.932);
+    background: linear-gradient(90deg, rgb(127, 208, 255) 32%, rgb(57, 22, 255) 79%);
 }
 
 .close-btn{

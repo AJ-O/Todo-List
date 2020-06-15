@@ -144,18 +144,22 @@ const UserList = (props: individualListInterface) => {
 
     async function deleteTodoList(listId: string) {
 
-        const options = {
-            method: "DELETE",
-        }
+        const userConfirmation = window.confirm("Are you sure you want to delete the list?");
 
-        const response = await fetch(`/deleteTodoList/${props.useremail}/${listId}`, options);
-        const json = await response.json();
-        console.log(json);
-
-        if(json.code !== 200) {
-            console.log(json.err);
-        } else {
-            setTodoLists(json["data"]["TodoLists"]);
+        if(userConfirmation) {
+            const options = {
+                method: "DELETE",
+            }
+    
+            const response = await fetch(`/deleteTodoList/${props.useremail}/${listId}`, options);
+            const json = await response.json();
+            console.log(json);
+    
+            if(json.code !== 200) {
+                console.log(json.err);
+            } else {
+                setTodoLists(json["data"]["TodoLists"]);
+            }     
         }
     }
 
